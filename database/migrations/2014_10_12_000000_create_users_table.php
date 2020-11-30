@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->enum('gender', ['Pria', 'Wanita']);
             $table->char('phone_number', 13);
             $table->longText('address');
-            $table->booelan('is_married')->nullable();
+            $table->boolean('is_married')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
