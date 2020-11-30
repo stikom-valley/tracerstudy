@@ -16,13 +16,13 @@ class RoleSeeder extends Seeder
         $batch = [
             [
                 'name' => 'Bagian Pengelolaan Alumni',
-                'code' => Str::slug('BPA'),
+                'slug' => Str::slug('BPA'),
             ],[
                 'name' => 'Wakil Rektor Bidang Alumni',
-                'code' => Str::slug('Warek Alumni'),
+                'slug' => Str::slug('Warek Alumni'),
             ],[
                 'name' => 'Alumni',
-                'code' => Str::slug('Alumni'),
+                'slug' => Str::slug('Alumni'),
             ],
         ];
 
