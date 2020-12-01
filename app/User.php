@@ -2,9 +2,9 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -16,7 +16,15 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'role_id',
+        'name',
+        'email',
+        'password',
+        'gender',
+        'phone_number',
+        'address',
+        'is_married',
+        'avatar',
     ];
 
     /**
@@ -36,4 +44,40 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function experiences()
+    {
+        return $this->hasMany('App\Experience');
+    }
+
+    public function skills()
+    {
+        return $this->hasMany('App\Skill');
+    }
+
+    public function role()
+    {
+        return $this->hasOne('App\Role');
+    }
+
+    public function education()
+    {
+        return $this->hasOne('App\Education');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany('App\Answer');
+    }
+
+    /**
+     * Get the Avatar Link
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getAvatarLinkAttribute()
+    {
+        return asset('public/uploads/' . $this->avatar);
+    }
 }
