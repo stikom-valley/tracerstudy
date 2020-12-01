@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateExperiencesTable extends Migration
 {
@@ -18,12 +18,11 @@ class CreateExperiencesTable extends Migration
             $table->string('company_name');
             $table->string('job_title');
             $table->date('start_date');
-            $table->date('end_date');
-            $table->tinyInteger('is_present');
-            $table->longText('description');
+            $table->date('end_date')->nullable();
+            $table->boolean('is_present');
+            $table->longText('description')->nullable();
             $table->longText('location');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('user_id')->on('skills')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
