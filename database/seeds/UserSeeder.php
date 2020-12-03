@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
       ]);
 
       $user2015 = factory(User::class, 32)->create([
-         'role_id' => 1
+         'role_id' => 3
       ]);
 
       $user2015->each(function ($user1) {
@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
       });
 
       $user2016 = factory(User::class, 20)->create([
-         'role_id' => 1
+         'role_id' => 3
       ]);
 
       $user2016->each(function ($user1) {
@@ -77,7 +77,7 @@ class UserSeeder extends Seeder
       });
 
       $user2017 = factory(User::class, 13)->create([
-         'role_id' => 1
+         'role_id' => 3
       ]);
 
       $user2017->each(function ($user1) {
@@ -102,7 +102,7 @@ class UserSeeder extends Seeder
       });
 
       $user2018 = factory(User::class, 6)->create([
-         'role_id' => 1
+         'role_id' => 3
       ]);
 
       $user2018->each(function ($user1) {
