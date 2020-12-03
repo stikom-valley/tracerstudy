@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->hasOne('App\Role');
+        return $this->belongsTo('App\Role', 'role_id');
     }
 
     public function education()
@@ -78,6 +78,28 @@ class User extends Authenticatable
      */
     public function getAvatarLinkAttribute()
     {
-        return asset('public/uploads/' . $this->avatar);
+        return asset('/uploads/avatar/' . $this->avatar);
+    }
+
+    public function hasRole($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $value) {
+                if ($this->checkUserRole($value)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public function getUserRole()
+    {
+        return $this->role()->getResults()->slug;
+    }
+
+    public function checkUserRole($role)
+    {
+        return $role == $this->getUserRole() ? true : false;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,7 +14,19 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $totalBPA = User::where('role_id', 1)->count();
+        $totalWarek = User::where('role_id', 2)->count();
+        $totalAlumni = User::where('role_id', 3)->count();
+
+        $users = User::all();
+
+        return view('frontend.dashboard.users.index')
+            ->with([
+                'users' => $users,
+                'totalBPA' => $totalBPA,
+                'totalWarek' => $totalWarek,
+                'totalAlumni' => $totalAlumni,
+            ]);
     }
 
     /**

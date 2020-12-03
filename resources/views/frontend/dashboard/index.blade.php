@@ -1,8 +1,8 @@
 @extends('frontend.master')
 
-@section('title')
-Dashboard
-@endsection
+@section('title','Dashboard')
+
+@section('dashboard', 'class=active')
 
 @section('content')
 <section class="section">

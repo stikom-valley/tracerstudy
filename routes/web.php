@@ -18,6 +18,37 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-Route::resource('dashboard', 'Frontend\DashboardController');
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes([
+    'register' => false,
+]);
+
+Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
+
+    Route::get('/', 'Frontend\DashboardController@index')
+        ->name('dashboard');
+
+    Route::group(['middleware' => ['role:bpa,warek-alumni']], function () {
+
+        // * Pengguna
+        Route::get('/users', 'UserController@index')
+            ->name('user.index');
+    });
+
+    // * Bagian Pengelolaan Alumni
+    Route::group(['middleware' => ['role:bpa']], function () {
+
+        // * Pengguna
+        Route::get('/user/create', 'UserController@create')
+            ->name('user.create');
+        Route::post('/user/store', 'UserController@store')
+            ->name('user.store');
+        Route::get('/user/{id}/edit', 'UserController@edit')
+            ->name('user.edit');
+        Route::post('/user/update/{id}', 'UserController@update')
+            ->name('user.update');
+        Route::post('/user/destroy/{id}', 'UserController@destroy')
+            ->name('user.destroy');
+
+        // * Riwayat Pekerjaan
+    });
+});
