@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Skill;
 use Illuminate\Support\Facades\Validator;
+use App\User;
 
 class SkillController extends Controller
 {
@@ -16,7 +17,8 @@ class SkillController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::where('role_id', 3)->get();
+        return view('frontend.dashboard.competence.index', ['users' => $user]);
     }
 
     /**
@@ -26,7 +28,8 @@ class SkillController extends Controller
      */
     public function create()
     {
-        //
+        $user = User::where('role_id', 3)->get();
+        return view('frontend.dashboard.competence.create', ['users' => $user]);
     }
 
     /**
@@ -37,21 +40,24 @@ class SkillController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'ceritification_document' => 'required'
-        ]);
+        $rules = [
+            'pilih_alumni' => 'required',
+            'nama_kompetensi' => 'required',
+            'sertifikat' => 'nullable'
+        ];
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
+        $ruleMessages = [
+            'pilih_alumni.required' => 'Alumni harus diisi',
+            'nama_kompetensi' => 'nama kompetensi harus diisi'
+        ];
 
+        $this->validate($request, $rules, $ruleMessages);
         $skill = new Skill();
-        $skill->name = $request->get('name');
-        $skill->ceritification_document = $request->get('ceritification_document');
-        $skill->user_id = $request->get('user_id');
+        $skill->name = $request->get('nama_kompetensi');
+        $skill->certification_document = $request->get('sertifikat');
+        $skill->user_id = $request->get('pilih_alumni');
         $skill->save();
-        return redirect() -> route('');
+        return redirect()->route('competence.index')->with('success', 'Kompetensi berhasil dibuat');
     }
 
     /**
@@ -62,7 +68,9 @@ class SkillController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $skill = Skill::where('user_id', $id)->get();
+        return view('frontend.dashboard.competence.show', ['user' => $user, 'skills' => $skill]);
     }
 
     /**
@@ -73,7 +81,9 @@ class SkillController extends Controller
      */
     public function edit($id)
     {
-        //
+        $skill = Skill::findOrFail($id);
+        $user = User::findOrFail($skill->user_id);
+        return response()->json(['skill' => $skill, 'user' => $user]);
     }
 
     /**
@@ -85,21 +95,22 @@ class SkillController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'ceritification_document' => 'required'
-        ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
+        $rules = [
+            'nama_kompetensi' => 'required',
+            'sertifikat' => 'nullable'
+        ];
 
+        $ruleMessages = [
+            'nama_kompetensi' => 'nama kompetensi harus diisi'
+        ];
+
+        $this->validate($request, $rules, $ruleMessages);
         $skill = Skill::findOrFail($id);
-        $skill->name = $request->get('name');
-        $skill->ceritification_document = $request->get('ceritification_document');
-        $skill->user_id = $request->get('user_id');
+        $skill->name = $request->get('nama_kompetensi');
+        $skill->certification_document = $request->get('sertifikat');
         $skill->save();
-        return redirect() -> route('');
+        return redirect()->route('competence.show',[$skill->user_id])->with('success', 'Kompetensi berhasil di edit');
     }
 
     /**
@@ -112,6 +123,6 @@ class SkillController extends Controller
     {
         $skill = Skill::findOrFail($id);
         $skill->delete();
-        return redirect() -> route('');
+        return response()->json(['message'=>'sukses']);
     }
 }

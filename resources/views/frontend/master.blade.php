@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="{{ asset('assets/modules/izitoast/css/iziToast.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/modules/datatables/datatables.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css') }}">
-
+  <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/components.css')}}">
@@ -48,6 +48,8 @@
   <script src="{{ asset('assets/modules/datatables/datatables.min.js') }}"></script>
   <script src="{{ asset('assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js') }}"></script>
   <script src="{{ asset('assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+  <script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous"></script>
   @include('frontend.include.toastr')
   @yield('scripts')
 </body>

@@ -49,6 +49,12 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
         Route::post('/user/destroy/{id}', 'UserController@destroy')
             ->name('user.destroy');
 
-        // * Riwayat Pekerjaan
+        Route::group(['namespace' => 'Frontend'], function () {
+            // * Riwayat Pekerjaan
+            Route::resource('experience', 'ExperienceController');
+
+            // kompetensi
+            Route::resource('competence', 'SkillController');
+        });
     });
 });

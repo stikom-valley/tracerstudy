@@ -4,12 +4,12 @@
     </a>
 </li>
 <li @yield('experiences')>
-    <a class="nav-link" href="#">
+<a class="nav-link" href="{{route('experience.index')}}">
         <i class="fas fa-briefcase"></i> <span>Riwayat Pekerjaan</span>
     </a>
 </li>
 <li @yield('skills')>
-    <a class="nav-link" href="#">
+<a class="nav-link" href="{{route('competence.index')}}">
         <i class="fas fa-compass"></i> <span>Kompetensi</span>
     </a>
 </li>

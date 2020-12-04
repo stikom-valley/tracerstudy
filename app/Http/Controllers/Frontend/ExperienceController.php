@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Experience;
+use App\User;
 
 class ExperienceController extends Controller
 {
@@ -16,8 +17,8 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        $exper = Experience::all();
-        return view('', ['exper' => $exper]);
+        $user = User::where('role_id', 3)->get();
+        return view('frontend.dashboard.experiences.index', ['users' => $user]);
     }
 
     /**
@@ -27,7 +28,8 @@ class ExperienceController extends Controller
      */
     public function create()
     {
-        //
+        $user = User::where('role_id', 3)->get();
+        return view('frontend.dashboard.experiences.create', ['users' => $user]);
     }
 
     /**
@@ -38,31 +40,43 @@ class ExperienceController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'company_name' => 'required',
-            'job_title' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'description' => 'required',
-            'location' => 'required',
-            'is_present'=>'required'
-        ]);
+        $rules = [
+            'pilih_alumni' => 'required',
+            'nama_perusahaan' => 'required',
+            'lama_berkerja' => 'required|date',
+            'berhenti_bekerja' => 'nullable|date|after:lama_bekerja',
+            'sekarang' => 'nullable',
+            'jabatan' => 'required',
+            'alamat' => 'required',
+            'deskripsi' => 'required'
+        ];
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
+        $ruleMessages = [
+            'nama_perusahaan.required' => 'Nama perusahaan harus diisi',
+            'lama_berkerja.required' => 'Lama bekerja harus diisi',
+            'jabatan.required' => 'Jabatan harus diisi',
+            'alamat.required' => 'Alamat harus diisi',
+            'deskripsi.required' => 'Deskripsi harus diisi'
+        ];
 
+        $this->validate($request, $rules, $ruleMessages);
         $exper = new Experience();
-        $exper->company_name = $request->get('company_name');
-        $exper->job_title = $request->get('job_title');
-        $exper->start_date = date("d/m/Y",strtotime($request->get('start_date')));
-        $exper->end_date = date("d/m/Y",strtotime($request->get('end_date')));
-        $exper->is_present = $request->get('is_present');
-        $exper->description = $request->get('description');
-        $exper->location = $request->get('location');
-        $exper->user_id = $request->get('user_id');
+        $exper->company_name = $request->get('nama_perusahaan');
+        $exper->job_title = $request->get('jabatan');
+        $exper->start_date = date("Y-m-d", strtotime($request->get('lama_berkerja')));
+        if ($request->get('berhenti_bekerja')) {
+            $exper->end_date = date("Y-m-d", strtotime($request->get('berhenti_bekerja')));
+        }
+        if ($request->get('sekarang')) {
+            $exper->is_present = 1;
+        } else {
+            $exper->is_present = 0;
+        }
+        $exper->description = $request->get('deskripsi');
+        $exper->location = $request->get('alamat');
+        $exper->user_id = $request->get('pilih_alumni');
         $exper->save();
-        return redirect()->route('');
+        return redirect()->route('experience.create')->with('success', 'Riwayat pekerjaan berhasil dibuat');
     }
 
     /**
@@ -73,7 +87,9 @@ class ExperienceController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $exper = Experience::where('user_id', $id)->get();
+        return view('frontend.dashboard.experiences.show', ['exper' => $exper, 'user' => $user]);
     }
 
     /**
@@ -84,7 +100,10 @@ class ExperienceController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $exper = Experience::findOrFail($id);
+        $user = User::findOrFail($exper->user_id);
+        return view('frontend.dashboard.experiences.edit', ['exper' => $exper, 'user' => $user]);
     }
 
     /**
@@ -96,31 +115,44 @@ class ExperienceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'company_name' => 'required',
-            'job_title' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'description' => 'required',
-            'location' => 'required',
-            'is_present'=>'required'
-        ]);
+        $rules = [
+            'nama_perusahaan' => 'required',
+            'lama_berkerja' => 'required|date',
+            'berhenti_bekerja' => 'nullable|date|after:lama_bekerja',
+            'sekarang' => 'nullable',
+            'jabatan' => 'required',
+            'alamat' => 'required',
+            'deskripsi' => 'required'
+        ];
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
+        $ruleMessages = [
+            'nama_perusahaan.required' => 'Nama perusahaan harus diisi',
+            'lama_berkerja.required' => 'Lama bekerja harus diisi',
+            'berhenti_bekerja.nullable:lama_kerja' => 'Berhenti bekerja',
+            'jabatan.required' => 'Jabatan harus diisi',
+            'alamat.required' => 'Alamat harus diisi',
+            'deskripsi.required' => 'Deskripsi harus diisi'
+        ];
 
+        $this->validate($request, $rules, $ruleMessages);
         $exper = Experience::findOrFail($id);
-        $exper->company_name = $request->get('company_name');
-        $exper->job_title = $request->get('slug');
-        $exper->start_date = date("d/m/Y",strtotime($request->get('start_date')));
-        $exper->end_date = date("d/m/Y",strtotime($request->get('end_date')));
-        $exper->is_present = $request->get('is_present');
-        $exper->description = $request->get('description');
-        $exper->location = $request->get('location');
-        $exper->user_id = $request->get('user_id');
+        $exper->company_name = $request->get('nama_perusahaan');
+        $exper->job_title = $request->get('jabatan');
+        $exper->start_date = date("Y-m-d", strtotime($request->get('lama_berkerja')));
+        if ($request->get('berhenti_bekerja')) {
+            $exper->end_date = date("Y-m-d", strtotime($request->get('berhenti_bekerja')));
+            $exper->is_present = 0;
+        }
+        if ($request->get('sekarang')) {
+            $exper->is_present = 1;
+            $exper->end_date = null;
+        }
+        $exper->description = $request->get('deskripsi');
+        $exper->location = $request->get('alamat');
         $exper->save();
-        return redirect()->route('');
+
+
+        return redirect()->route('experience.show', [$exper->user_id])->with('success', 'Riwayat pekerjaan berhasil diupdate');
     }
 
     /**
@@ -129,9 +161,12 @@ class ExperienceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $exper = Experience::findOrFail($id);
-        $exper->delete();
+        if ($request->ajax()) {
+            $exper = Experience::find($id);
+            $exper->delete();
+            return response()->json(['message' => 'sukses']);
+        }
     }
 }
