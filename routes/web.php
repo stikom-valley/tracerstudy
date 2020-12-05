@@ -61,6 +61,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 
             // * Jurusan
             Route::resource('major', 'MajorController');
+
+            // * Pertanyaan
+            Route::resource('question', 'QuestionController');
+            Route::post('question/sort', 'QuestionController@sort')
+                ->name('question.sort');
+
+            // * Jawaban
+            Route::resource('answer', 'AnswerController');
         });
     });
 });

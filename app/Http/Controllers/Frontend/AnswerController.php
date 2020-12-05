@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Question;
 use App\Answer;
+use App\Question;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class AnswerController extends Controller
 {
@@ -40,21 +41,50 @@ class AnswerController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'slug' => 'required'
-        ]);
+        $rules = [
+            'description' => 'required|min:3',
+        ];
+
+        $ruleMessages = [
+            'description.required' => 'Deskripsi Jawaban harus diisi',
+            'description.min' => 'Deskripsi Jawaban minimal 3 karakter',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $ruleMessages);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
+            $errors = $validator->errors()->all();
+            $htmlErrors = '<ul>';
+
+            foreach ($errors as $item) {
+                $htmlErrors .= '<li>' . $item . '</li>';
+            }
+
+            $htmlErrors .= '</ul>';
+
+            return response()->json([
+                'code' => Response::HTTP_OK,
+                'status' => false,
+                'error' => $validator->errors()->all(),
+                'message' => '<div class="alert alert-danger">Mohon masukkan data yang sesuai dengan formulir:<br>' . $htmlErrors . '</div>'
+            ]);
         }
 
-        $question = Question::findOrFail($request->get('id'));
-        $answer = new answer();
-        $answer->description = $request->get('description');
-        $answer->question_id = $question->id;
+        $idQuestion = $request->question_id;
+        $description = $request->description;
+
+        $answer = new Answer();
+
+        $answer->question_id = $idQuestion;
+        $answer->description = $description;
+
         $answer->save();
-        return redirect() -> route('');
+
+        return response()->json([
+            'code' => Response::HTTP_OK,
+            'status' => true,
+            'message' => '<div class="alert alert-success">Data berhasil ditambahkan</div>'
+        ]);
     }
 
     /**

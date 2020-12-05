@@ -14,7 +14,7 @@
     </a>
 </li>
 <li @yield('questions')>
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('question.index') }}">
         <i class="fas fa-comments"></i> <span>Kuisioner</span>
     </a>
 </li>

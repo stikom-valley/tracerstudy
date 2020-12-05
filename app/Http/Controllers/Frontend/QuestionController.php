@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Answer;
 use App\Question;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionController extends Controller
 {
@@ -16,8 +19,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $question = Question::all();
-        return view('', ['question' => $question]);
+        $questions = Question::all();
+        return view('frontend.dashboard.questions.index', ['questions' => $questions]);
     }
 
     /**
@@ -27,7 +30,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        return view('frontend.dashboard.questions.create');
     }
 
     /**
@@ -38,20 +41,29 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'description' => 'required',
-            'type' => 'required'
-        ]);
+        $rules = [
+            'description' => 'required|min:10',
+        ];
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
+        $ruleMessages = [
+            'description.required' => 'Pertanyaan harus diisi',
+            'description.min' => 'Pertanyaan minimal 10 karakter',
+        ];
 
-        $faculty = new Question();
-        $faculty->description = $request->get('description');
-        $faculty->type = $request->get('type');
-        $faculty->save();
-        return redirect() -> route('');
+        $sequence = Question::count();
+
+        $sequence += 1;
+
+        $question = new Question();
+
+        $question->description = $request->description;
+        $question->sequence = $sequence;
+
+        $question->save();
+
+        return redirect()
+            ->route('question.index')
+            ->with('success', 'Pertanyaan berhasil disimpan');
     }
 
     /**
@@ -73,8 +85,16 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        $Question = Question::findOrFail($id);
-        return view('', ['Question' => $Question]);
+        $question = Question::findOrFail($id);
+
+        $answers = Answer::where('question_id', $id)
+            ->get();
+
+        return view('frontend.dashboard.questions.edit')
+            ->with([
+                'question' => $question,
+                'answers' => $answers,
+            ]);
     }
 
     /**
@@ -99,7 +119,7 @@ class QuestionController extends Controller
         $faculty->description = $request->get('description');
         $faculty->type = $request->get('type');
         $faculty->save();
-        return redirect() -> route('');
+        return redirect()->route('');
     }
 
     /**
@@ -113,5 +133,31 @@ class QuestionController extends Controller
         $question = Question::findOrFail($id);
         $question->delete();
         return redirect()->route('');
+    }
+
+    public function sort(Request $request)
+    {
+        $sequence = 1;
+
+        $seq = $request->sequence;
+
+        foreach ($seq as $key) {
+            DB::beginTransaction();
+
+            try {
+                $id = $key['id'];
+
+                $link =  Question::find($id);
+
+                $link->sequence = $sequence++;
+
+                $link->save();
+
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollback();
+                Log::error($e);
+            }
+        }
     }
 }

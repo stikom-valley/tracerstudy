@@ -16,7 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->longText('description');
-            $table->enum('type', ['bot', 'general']);
+            $table->integer('sequence');
             $table->timestamps();
         });
     }
