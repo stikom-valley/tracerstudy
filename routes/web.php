@@ -69,6 +69,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 
             // * Jawaban
             Route::resource('answer', 'AnswerController');
+
+            // * Kelulusan
+            Route::resource('education', 'EducationController');
+            Route::get('/get-majors', 'EducationController@getMajors')
+                ->name('get.major');
         });
     });
 });

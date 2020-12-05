@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\User;
+use App\Major;
+use App\Faculty;
 use App\Education;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class EducationController extends Controller
 {
@@ -16,7 +20,14 @@ class EducationController extends Controller
      */
     public function index()
     {
-        //
+        $educations = Education::select('graduation_year', 'id')
+            ->with('user')
+            ->groupBy('graduation_year')
+            ->orderBy('graduation_year', 'asc')
+            ->get();
+
+        return view('frontend.dashboard.educations.index')
+            ->with(['educations' => $educations]);
     }
 
     /**
@@ -26,7 +37,17 @@ class EducationController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::where('role_id', 3)
+            ->whereDoesntHave('education')
+            ->get();
+
+        $faculties = Faculty::all();
+
+        return view('frontend.dashboard.educations.create')
+            ->with([
+                'users' => $users,
+                'faculties' => $faculties,
+            ]);
     }
 
     /**
@@ -37,26 +58,42 @@ class EducationController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'entry_year' => 'required',
-            'graduation_year' => 'required',
-            'description' => 'required',
-            'score'=>'required'
-        ]);
+        $rules = [
+            'user_id' => 'required',
+            'faculty_id' => 'required',
+            'major_id' => 'required',
+            'daterange' => 'required',
+            'score' => 'required',
+        ];
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
+        $ruleMessages = [
+            'user_id.required' => 'Alumni harus dipilih',
+            'faculty_id.required' => 'Fakultas harus dipilih',
+            'major_id.required' => 'Jurusan harus dipilih',
+            'daterange.required' => 'Tahun kelulusan harus dipilih',
+            'score.required' => 'IPK harus diisi',
+        ];
 
-        $educ = new Education();
-        $educ->entry_year = date("Y",strtotime($request->get('entry_year')));
-        $educ->graduation_year = date("Y",strtotime($request->get('graduation_year')));
-        $educ->score = $request->get('score');
-        $educ->faculty_id = $request->get('faculty_id');
-        $educ->major_id = $request->get('major_id');
-        $educ->user_id = $request->get('user_id');
-        $educ->save();
-        return redirect()->route('');
+        $this->validate($request, $rules, $ruleMessages);
+
+        $date = explode('-', $request->daterange);
+        $entryYear = date('Y', strtotime($date[0]));
+        $graduationYear = date('Y', strtotime($date[1]));
+
+        $education = new Education();
+
+        $education->entry_year = $entryYear;
+        $education->graduation_year = $graduationYear;
+        $education->score = $request->score;
+        $education->faculty_id = $request->faculty_id;
+        $education->major_id = $request->major_id;
+        $education->user_id = $request->user_id;
+
+        $education->save();
+
+        return redirect()
+            ->route('education.index')
+            ->with('success', 'Data kelulusan berhasil ditambahkan');
     }
 
     /**
@@ -78,7 +115,13 @@ class EducationController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $faculties = Faculty::all();
+
+        return view('frontend.dashboard.educations.edit')
+            ->with([
+                'faculties' => $faculties,
+            ]);
     }
 
     /**
@@ -90,26 +133,42 @@ class EducationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'entry_year' => 'required',
-            'graduation_year' => 'required',
-            'description' => 'required',
-            'score'=>'required'
-        ]);
+        $rules = [
+            'user_id' => 'required',
+            'faculty_id' => 'required',
+            'major_id' => 'required',
+            'daterange' => 'required',
+            'score' => 'required',
+        ];
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
+        $ruleMessages = [
+            'user_id.required' => 'Alumni harus dipilih',
+            'faculty_id.required' => 'Fakultas harus dipilih',
+            'major_id.required' => 'Jurusan harus dipilih',
+            'daterange.required' => 'Tahun kelulusan harus dipilih',
+            'score.required' => 'IPK harus diisi',
+        ];
 
-        $educ = Education::findOrFail($id);
-        $educ->entry_year = date("Y",strtotime($request->get('entry_year')));
-        $educ->graduation_year = date("Y",strtotime($request->get('graduation_year')));
-        $educ->score = $request->get('score');
-        $educ->faculty_id = $request->get('faculty_id');
-        $educ->major_id = $request->get('major_id');
-        $educ->user_id = $request->get('user_id');
-        $educ->save();
-        return redirect()->route('');
+        $this->validate($request, $rules, $ruleMessages);
+
+        $date = explode('-', $request->daterange);
+        $entryYear = date('Y', strtotime($date[0]));
+        $graduationYear = date('Y', strtotime($date[1]));
+
+        $education = Education::findOrFail($id);
+
+        $education->entry_year = $entryYear;
+        $education->graduation_year = $graduationYear;
+        $education->score = $request->score;
+        $education->faculty_id = $request->faculty_id;
+        $education->major_id = $request->major_id;
+        $education->user_id = $request->user_id;
+
+        $education->save();
+
+        return redirect()
+            ->route('education.index')
+            ->with('success', 'Data kelulusan berhasil diperbarui');
     }
 
     /**
@@ -122,6 +181,23 @@ class EducationController extends Controller
     {
         $educ = Education::findOrFail($id);
         $educ->delete();
-        return redirect()->route('');
+        return redirect()
+            ->route('education.index')
+            ->with('success', 'Data kelulusan berhasil dihapus');
+    }
+
+    public function getMajors(Request $request)
+    {
+        $idFaculty = $request->faculty_id;
+
+        $data = Major::where('faculty_id', $idFaculty)
+            ->select('id', 'name')
+            ->get();
+
+        return response()->json([
+            'code' => Response::HTTP_OK,
+            'status' => true,
+            'data' => $data,
+        ]);
     }
 }

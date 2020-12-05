@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="{{ asset('assets/modules/select2/dist/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/modules/nestable/css/nestable.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/modules/summernote/summernote-bs4.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.css') }}">
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/components.css')}}">
@@ -53,6 +54,7 @@
   <script src="{{ asset('assets/modules/select2/dist/js/select2.min.js') }}"></script>
   <script src="{{ asset('assets/modules/nestable/js/jquery.nestable.js') }}"></script>
   <script src="{{ asset('assets/modules/summernote/summernote-bs4.js') }}"></script>
+  <script src="{{ asset('assets/modules/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous"></script>
   @include('frontend.include.toastr')
   @yield('scripts')

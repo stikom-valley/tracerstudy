@@ -1,6 +1,6 @@
 <li class="menu-header">Data Alumni</li>
 <li @yield('educations')>
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('education.index') }}">
         <i class="fas fa-graduation-cap"></i> <span>Kelulusan</span>
     </a>
 </li>
