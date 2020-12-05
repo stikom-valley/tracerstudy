@@ -55,24 +55,24 @@ class UserSeeder extends Seeder
          'role_id' => 3
       ]);
 
-      $user2016->each(function ($user1) {
+      $user2016->each(function ($user2) {
 
          $date = Carbon::create(2016, 1, 1, 0, 0, 0);
 
          factory(Education::class)->create([
-            'user_id' => $user1,
+            'user_id' => $user2,
             'entry_year' => $date->format('Y'),
             'graduation_year' => $date->addYears(4)->format('Y'),
          ]);
 
          factory(Experience::class, 2)->create([
-            'user_id' => $user1,
+            'user_id' => $user2,
             'start_date' => $date->addYear()->format('Y-m-d'),
             'end_date' => $date->addYears(3)->format('Y-m-d'),
          ]);
 
          factory(Skill::class, 4)->create([
-            'user_id' => $user1
+            'user_id' => $user2
          ]);
       });
 
@@ -80,24 +80,24 @@ class UserSeeder extends Seeder
          'role_id' => 3
       ]);
 
-      $user2017->each(function ($user1) {
+      $user2017->each(function ($user3) {
 
          $date = Carbon::create(2017, 1, 1, 0, 0, 0);
 
          factory(Education::class)->create([
-            'user_id' => $user1,
+            'user_id' => $user3,
             'entry_year' => $date->format('Y'),
             'graduation_year' => $date->addYears(4)->format('Y'),
          ]);
 
          factory(Experience::class, 2)->create([
-            'user_id' => $user1,
+            'user_id' => $user3,
             'start_date' => $date->addYear()->format('Y-m-d'),
             'end_date' => $date->addYears(3)->format('Y-m-d'),
          ]);
 
          factory(Skill::class, 4)->create([
-            'user_id' => $user1
+            'user_id' => $user3
          ]);
       });
 
@@ -105,24 +105,24 @@ class UserSeeder extends Seeder
          'role_id' => 3
       ]);
 
-      $user2018->each(function ($user1) {
+      $user2018->each(function ($user4) {
 
          $date = Carbon::create(2018, 1, 1, 0, 0, 0);
 
          factory(Education::class)->create([
-            'user_id' => $user1,
+            'user_id' => $user4,
             'entry_year' => $date->format('Y'),
             'graduation_year' => $date->addYears(4)->format('Y'),
          ]);
 
          factory(Experience::class, 2)->create([
-            'user_id' => $user1,
+            'user_id' => $user4,
             'start_date' => $date->addYear()->format('Y-m-d'),
             'end_date' => $date->addYears(3)->format('Y-m-d'),
          ]);
 
          factory(Skill::class, 4)->create([
-            'user_id' => $user1
+            'user_id' => $user4
          ]);
       });
 
