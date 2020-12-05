@@ -12,7 +12,6 @@
         <i class="fas fa-columns"></i> <span>Dashboard</span>
       </a>
     </li>
-    <li class="menu-header">Menu</li>
     @include('frontend.menu.bpa')
   </ul>
 </aside>
