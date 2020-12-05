@@ -53,8 +53,14 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
             // * Riwayat Pekerjaan
             Route::resource('experience', 'ExperienceController');
 
-            // kompetensi
+            // * Kompetensi
             Route::resource('competence', 'SkillController');
+
+            // * Fakultas
+            Route::resource('faculty', 'FacultyController');
+
+            // * Jurusan
+            Route::resource('major', 'MajorController');
         });
     });
 });

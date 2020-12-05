@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Major;
 use App\Faculty;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class FacultyController extends Controller
 {
@@ -16,8 +19,8 @@ class FacultyController extends Controller
      */
     public function index()
     {
-        $faculty = Faculty::all();
-        return view('', ['faculty' => $faculty]);
+        $faculties = Faculty::all();
+        return view('frontend.dashboard.faculties.index', ['faculties' => $faculties]);
     }
 
     /**
@@ -27,7 +30,7 @@ class FacultyController extends Controller
      */
     public function create()
     {
-        return view('');
+        return view('frontend.dashboard.faculties.create');
     }
 
     /**
@@ -38,20 +41,49 @@ class FacultyController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'slug' => 'required'
-        ]);
+        $rules = [
+            'name' => 'required|min:3',
+        ];
+
+        $ruleMessages = [
+            'name.required' => 'Nama Fakultas harus diisi',
+            'name.min' => 'Nama Fakultas minimal 3 karakter',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $ruleMessages);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
+            $errors = $validator->errors()->all();
+            $htmlErrors = '<ul>';
+
+            foreach ($errors as $item) {
+                $htmlErrors .= '<li>' . $item . '</li>';
+            }
+
+            $htmlErrors .= '</ul>';
+
+            return response()->json([
+                'code' => Response::HTTP_OK,
+                'status' => false,
+                'error' => $validator->errors()->all(),
+                'message' => '<div class="alert alert-danger">Mohon masukkan data yang sesuai dengan formulir:<br>' . $htmlErrors . '</div>'
+            ]);
         }
 
+        $name = $request->name;
+
         $faculty = new Faculty();
-        $faculty->name = $request->get('name');
-        $faculty->slug = $request->get('slug');
+
+        $faculty->name = $name;
+        $faculty->slug = Str::slug($name);
+
         $faculty->save();
-        return redirect() -> route('');
+
+        return response()->json([
+            'code' => Response::HTTP_OK,
+            'status' => true,
+            'message' => '<div class="alert alert-success">Data berhasil ditambahkan</div>'
+        ]);
     }
 
     /**
@@ -74,7 +106,9 @@ class FacultyController extends Controller
     public function edit($id)
     {
         $faculty = Faculty::findOrFail($id);
-        return view('', ['faculty' => $faculty]);
+        $majors = Major::where('faculty_id', $id)->get();
+
+        return view('frontend.dashboard.faculties.edit', ['faculty' => $faculty, 'majors' => $majors]);
     }
 
     /**
@@ -86,20 +120,27 @@ class FacultyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'slug' => 'required'
-        ]);
+        $rules = [
+            'name' => 'required|min:3'
+        ];
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
+        $ruleMessages = [
+            'name.required' => 'Nama Fakultas harus diisi',
+            'name.min' => 'Nama Fakultas minimal 3 karakter',
+        ];
+
+        $this->validate($request, $rules, $ruleMessages);
+
+        $name = $request->name;
 
         $faculty = Faculty::findOrFail($id);
-        $faculty->name = $request->get('name');
-        $faculty->slug = $request->get('slug');
+
+        $faculty->name = $name;
+        $faculty->slug = Str::slug($name);
+
         $faculty->save();
-        return redirect() -> route('');
+
+        return redirect()->route('faculty.index');
     }
 
     /**
@@ -112,6 +153,6 @@ class FacultyController extends Controller
     {
         $faculty = Faculty::findOrFail($id);
         $faculty->delete();
-        return redirect()->route('');
+        return redirect()->route('faculty.index');
     }
 }

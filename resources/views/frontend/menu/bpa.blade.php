@@ -19,7 +19,7 @@
     </a>
 </li>
 <li @yield('faculties')>
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="{{ route('faculty.index') }}">
         <i class="fas fa-school"></i> <span>Fakultas</span>
     </a>
 </li>

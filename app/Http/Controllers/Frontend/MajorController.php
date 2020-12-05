@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Major;
 use App\Faculty;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
 class MajorController extends Controller
@@ -40,23 +42,51 @@ class MajorController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'slug' => 'required',
-            'id' => 'required'
-        ]);
+        $rules = [
+            'name' => 'required|min:3',
+        ];
+
+        $ruleMessages = [
+            'name.required' => 'Nama Jurusan harus diisi',
+            'name.min' => 'Nama Jurusan minimal 3 karakter',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $ruleMessages);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
+            $errors = $validator->errors()->all();
+            $htmlErrors = '<ul>';
+
+            foreach ($errors as $item) {
+                $htmlErrors .= '<li>' . $item . '</li>';
+            }
+
+            $htmlErrors .= '</ul>';
+
+            return response()->json([
+                'code' => Response::HTTP_OK,
+                'status' => false,
+                'error' => $validator->errors()->all(),
+                'message' => '<div class="alert alert-danger">Mohon masukkan data yang sesuai dengan formulir:<br>' . $htmlErrors . '</div>'
+            ]);
         }
 
-        $faculty = Faculty::findOrFail($request->get('id'));
+        $idFaculty = $request->faculty_id;
+        $name = $request->name;
+
         $major = new Major();
-        $major->name = $request->get('name');
-        $major->slug = $request->get('slug');
-        $major->faculties_id = $faculty->get('id');
+
+        $major->faculty_id = $idFaculty;
+        $major->name = $name;
+        $major->slug = Str::slug($name);
+
         $major->save();
-        return redirect()->route('');
+
+        return response()->json([
+            'code' => Response::HTTP_OK,
+            'status' => true,
+            'message' => '<div class="alert alert-success">Data berhasil ditambahkan</div>'
+        ]);
     }
 
     /**
@@ -121,6 +151,10 @@ class MajorController extends Controller
     {
         $major = Major::findOrFail($id);
         $major->delete();
-        return redirect()->route('');
+        return response()->json([
+            'status' => true,
+            'code' => Response::HTTP_OK,
+            'message' => 'Jurusan berhasil dihapus',
+        ]);
     }
 }
