@@ -12,6 +12,8 @@
         <i class="fas fa-columns"></i> <span>Dashboard</span>
       </a>
     </li>
+    @can('isBPA')
     @include('frontend.menu.bpa')
+    @endcan
   </ul>
 </aside>
