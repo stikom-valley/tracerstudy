@@ -9,7 +9,8 @@
     <div class="section-header">
         <h1>Pengguna</h1>
         <div class="section-header-button ml-auto">
-            <a href="#" class="btn btn-primary"><i class="fas fa-plus pr-2"></i>Pengguna Baru</a>
+            <a href="{{ route('user.create') }}" class="btn btn-primary"><i class="fas fa-plus pr-2"></i>Pengguna
+                Baru</a>
         </div>
     </div>
     <div class="section-body">
@@ -95,10 +96,10 @@
                                             <a href="#" class="btn btn-sm btn-secondary">
                                                 <i class="fas fa-eye"></i>
                                             </a>
-                                            <a href="#" class="btn btn-sm btn-info">
+                                            <a href="{{ route('user.edit', $item->id) }}" class="btn btn-sm btn-info">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="#" class="btn btn-sm btn-danger">
+                                            <a href="#" data-id="{{ $item->id }}" class="btn delete btn-sm btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </td>
@@ -119,6 +120,44 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#table-1").dataTable();
+
+        function ajax() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+        }
+
+        $(document).on('click', '.delete', function () {
+            var id = $(this).data('id');
+            swal({
+                    title: "Apa kamu yakin ?",
+                    text: "Setelah dihapus, Anda tidak akan dapat memulihkan data ini!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        ajax();
+                        $.ajax({
+                            url: '/dashboard/user/' + id,
+                            method: 'DELETE',
+                            success: function (response) {
+                                if (response.status == true) {
+                                    swal(response.message, {
+                                        icon: "success",
+                                    }).then((results) => {
+                                        location.reload(true);
+                                    });
+                                }
+                            }
+                        })
+
+                    }
+                });
+        });
     });
 </script>
 @endsection

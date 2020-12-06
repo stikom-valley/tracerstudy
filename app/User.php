@@ -78,7 +78,11 @@ class User extends Authenticatable
      */
     public function getAvatarLinkAttribute()
     {
-        return asset('/uploads/avatar/' . $this->avatar);
+        if ($this->avatar == 'user.png') {
+            return asset('/uploads/avatar/' . $this->avatar);
+        } else {
+            return url('storage/uploads/avatar/' . $this->avatar);
+        }
     }
 
     public function hasRole($roles)

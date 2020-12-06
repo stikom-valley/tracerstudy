@@ -30,7 +30,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role:bpa,warek-alumni']], function () {
 
         // * Pengguna
-        Route::get('/users', 'UserController@index')
+        Route::get('/user', 'UserController@index')
             ->name('user.index');
     });
 
@@ -48,6 +48,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
             ->name('user.update');
         Route::post('/user/destroy/{id}', 'UserController@destroy')
             ->name('user.destroy');
+        Route::post('/user/change/password', 'UserController@updatePassword')
+            ->name('user.password');
 
         Route::group(['namespace' => 'Frontend'], function () {
             // * Riwayat Pekerjaan
