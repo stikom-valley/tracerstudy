@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_married')->nullable();
             $table->dateTime('birth_date')->nullable();
             $table->string('avatar')->nullable()->default('user.png');
+            $table->longText('linked_in')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
