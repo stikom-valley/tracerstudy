@@ -21,12 +21,10 @@ use Illuminate\Support\Facades\Hash;
 $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
+        'reg_number' => $faker->numerify('###########'),
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => Hash::make('password'),
-        'gender' => $faker->randomElement(['Pria', 'Wanita']),
-        'phone_number' => '0812345678',
-        'address' => $faker->address,
         'remember_token' => Str::random(10),
     ];
 });

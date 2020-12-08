@@ -24,12 +24,12 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" type="email" value="{{ old('email') }}" class="form-control" name="email" tabindex="1" autofocus>
+                <label for="reg_number">ID Pengguna</label>
+                <input id="reg_number" type="text" value="{{ old('reg_number') }}" class="form-control" name="reg_number" tabindex="1" autofocus>
             </div>
 
             <div class="form-group">
-                <label for="password">Password</label>
+                <label for="password">Kata Sandi</label>
                 <input id="password" type="password" class="form-control" name="password" tabindex="2">
             </div>
 

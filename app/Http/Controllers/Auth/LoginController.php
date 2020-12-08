@@ -42,7 +42,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    
+
     /**
      * Show the application's login form.
      *
@@ -64,14 +64,13 @@ class LoginController extends Controller
     protected function validateLogin(Request $request)
     {
         $rules = [
-            'email' => 'required|email|exists:users,email',
+            'reg_number' => 'required|exists:users,reg_number',
             'password' => 'required|min:8'
         ];
 
         $ruleMessages = [
-            'email.required' => 'Email harus diisi',
-            'email.email' => 'Format Email tidak salah',
-            'email.exists' => 'Email tidak terdaftar',
+            'reg_number.required' => 'NIM harus diisi',
+            'reg_number.exists' => 'NIM tidak terdaftar',
             'password.required' => 'Kata sandi harus diisi',
             'password.min' => 'Kata sandi minimal 8 karakter'
         ];
@@ -79,7 +78,17 @@ class LoginController extends Controller
         $this->validate($request, $rules, $ruleMessages);
     }
 
-        /**
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'reg_number';
+    }
+
+    /**
      * * Get the failed login response instance.
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -93,7 +102,7 @@ class LoginController extends Controller
             ->with('alert-danger', 'Email atau sandi anda salah!');
     }
 
-        /**
+    /**
      * * Get the post register / login redirect path.
      *
      * @return string
