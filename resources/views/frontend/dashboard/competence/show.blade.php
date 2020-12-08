@@ -54,10 +54,8 @@
             </div>
         </div>
     </section>
-
     @include('frontend.dashboard.competence.edit')
 @endsection
-
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
