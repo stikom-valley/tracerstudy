@@ -19,8 +19,7 @@
                     <div class="card-header">
                         <h4 class="text-info"><i class="fas fa-edit pr-2"></i>Edit Pengguna</h4>
                     </div>
-                    <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
-                        @method('PUT')
+                    <form action="{{ route('user.update', $user->id) }}" method="post">
                         @csrf
                         <div class="card-body">
                             <div class="row">
@@ -41,62 +40,20 @@
                                         @enderror
                                     </div>
                                     <div class="form-group">
+                                        <label for="reg_number">ID Pengguna <span class="text-danger">*</span></label>
+                                        <input type="reg_number" name="reg_number" class="form-control"
+                                            value="{{ $user->reg_number }}" placeholder="Masukkan ID Pengguna...">
+                                        @error('reg_number')
+                                        <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
                                         <label for="name">Nama <span class="text-danger">*</span></label>
                                         <input type="text" name="name" class="form-control" value="{{ $user->name }}"
                                             placeholder="Masukkan nama...">
                                         @error('name')
                                         <p class="text-danger">{{ $message }}</p>
                                         @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email <span class="text-danger">*</span></label>
-                                        <input type="email" name="email" class="form-control" value="{{ $user->email }}"
-                                            placeholder="Masukkan email...">
-                                        @error('email')
-                                        <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="gender" class="d-block">Jenis Kelamin <span
-                                                class="text-danger">*</span></label>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="male" name="gender" class="custom-control-input"
-                                                value="Male" {{ $user->gender == 'Pria' ? 'checked':'' }}>
-                                            <label class="custom-control-label" for="male">Pria</label>
-                                        </div>
-                                        <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="female" name="gender" class="custom-control-input"
-                                                value="Wanita" {{ $user->gender == 'Wanita' ? 'checked':'' }}>
-                                            <label class="custom-control-label" for="female">Wanita</label>
-                                        </div>
-                                        @error('gender')
-                                        <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone_number">Nomor HP <span class="text-danger">*</span></label>
-                                        <input type="text" name="phone_number" class="form-control"
-                                            value="{{ $user->phone_number }}" placeholder="Masukkan nomor HP...">
-                                        @error('phone_number')
-                                        <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="avatar">Avatar <span class="text-danger">*</span></label>
-                                        <li class="media">
-                                            <img class="mr-2 rounded-circle" src="{{ $user->avatar_link }}"
-                                                alt="Generic placeholder image" width="80" height="80"
-                                                style="object-fit: cover; object-position: 50% 0%;" id="previewImage">
-                                            <div class="media-body">
-                                                <input type="file" name="avatar" class="form-control" id="image">
-                                                <small class="text-muted form-text">Format yang didukung JPG,PNG,SVG.
-                                                    Maksimum
-                                                    2MB</small>
-                                                @error('avatar')
-                                                <p class="text-danger">{{ $message }}</p>
-                                                @enderror
-                                            </div>
-                                        </li>
                                     </div>
                                 </div>
                             </div>
@@ -154,19 +111,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('.select2').select2();
-        //preview image
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#previewImage').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-        $("#image").change(function () {
-            readURL(this);
-        });
     });
 
 </script>

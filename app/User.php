@@ -18,11 +18,13 @@ class User extends Authenticatable
     protected $fillable = [
         'role_id',
         'name',
+        'reg_number',
         'email',
         'password',
         'gender',
         'phone_number',
         'address',
+        'birth_date',
         'is_married',
         'avatar',
     ];
@@ -43,6 +45,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birth_date' => 'datetime',
     ];
 
     public function experiences()

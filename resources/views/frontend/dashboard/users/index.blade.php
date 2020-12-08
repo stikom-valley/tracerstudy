@@ -72,8 +72,8 @@
                             <table class="table table-striped" id="table-1">
                                 <thead>
                                     <tr>
+                                        <th>ID Pengguna</th>
                                         <th>Nama</th>
-                                        <th>Email</th>
                                         <th>Hak Akses</th>
                                         <th>Action</th>
                                     </tr>
@@ -81,8 +81,8 @@
                                 <tbody>
                                     @foreach($users as $item)
                                     <tr>
+                                        <td>{{ $item->reg_number }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td>{{ $item->email }}</td>
                                         <td>
                                             @if ($item->role->slug == 'bpa')
                                             <div class="badge badge-success">{{ $item->role->name }}</div>
@@ -142,8 +142,8 @@
                     if (willDelete) {
                         ajax();
                         $.ajax({
-                            url: '/dashboard/user/' + id,
-                            method: 'DELETE',
+                            url: '/dashboard/user/destroy/' + id,
+                            method: 'POST',
                             success: function (response) {
                                 if (response.status == true) {
                                     swal(response.message, {

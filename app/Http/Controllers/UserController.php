@@ -8,10 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -63,10 +60,7 @@ class UserController extends Controller
         $rules = [
             'role_id' => 'required',
             'name' => 'required|min:3',
-            'gender' => 'required',
-            'phone_number' => 'required|numeric',
-            'avatar' => 'image|max:2048',
-            'email' => 'required|email|unique:users,email',
+            'reg_number' => 'required|min:3|unique:users,reg_number',
             'password' => 'required|min:8|confirmed'
         ];
 
@@ -74,14 +68,9 @@ class UserController extends Controller
             'role_id.required' => 'Hak Akses harus dipilih',
             'name.required' => 'Nama harus diisi',
             'name.min' => 'Nama minimal 3 karakter',
-            'gender.required' => 'Jenis Kelamin harus dipilih',
-            'phone_number.required' => 'Nomor HP harus diisi',
-            'phone_number.numeric' => 'Nomor HP harus berupa angka',
-            'avatar.image' => 'Format Avatar tidak sesuai',
-            'avatar.max' => 'Avatar maksimum 2MB',
-            'email.required' => 'Email harus diisi',
-            'email.email' => 'Format Email tidak sesuai',
-            'email.unique' => 'Email sudah terdaftar',
+            'reg_number.required' => 'ID Pengguna harus diisi',
+            'reg_number.min' => 'ID Pengguna minimal 3 karakter',
+            'reg_number.unique' => 'ID Pengguna sudah terdaftar',
             'password.required' => 'Sandi baru harus diisi',
             'password.min' => 'Sandi baru minimal 8 karakter',
             'password.confirmed' => 'Sandi baru tidak cocok',
@@ -91,10 +80,7 @@ class UserController extends Controller
 
         $role = $request->role_id;
         $name = $request->name;
-        $gender = $request->gender;
-        $phoneNumber = $request->phone_number;
-        $avatar = $request->avatar;
-        $email = $request->email;
+        $regNumber = $request->reg_number;
         $password = $request->password;
 
         DB::beginTransaction();
@@ -103,21 +89,9 @@ class UserController extends Controller
 
             $user = new User();
 
-            if (!empty($avatar)) {
-                $filePath = 'public/uploads/avatar/';
-
-                $storagePath = Storage::put($filePath, $avatar);
-
-                $fileName = basename($storagePath);
-
-                $user->avatar = $fileName;
-            }
-
             $user->role_id = $role;
             $user->name = $name;
-            $user->gender = $gender;
-            $user->phone_number = $phoneNumber;
-            $user->email = $email;
+            $user->reg_number = $regNumber;
             $user->password = Hash::make($password);
 
             $user->save();
@@ -179,35 +153,23 @@ class UserController extends Controller
         $rules = [
             'role_id' => 'required',
             'name' => 'required|min:3',
-            'gender' => 'required',
-            'phone_number' => 'required|numeric',
-            'avatar' => 'image|max:2048',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'reg_number' => 'required|min:3|unique:users,reg_number,' . $id,
         ];
 
         $ruleMessages = [
             'role_id.required' => 'Hak Akses harus dipilih',
             'name.required' => 'Nama harus diisi',
             'name.min' => 'Nama minimal 3 karakter',
-            'gender.required' => 'Jenis Kelamin harus dipilih',
-            'phone_number.required' => 'Nomor HP harus diisi',
-            'phone_number.numeric' => 'Nomor HP harus berupa angka',
-            'avatar.image' => 'Format Avatar tidak sesuai',
-            'avatar.max' => 'Avatar maksimum 2MB',
-            'email.required' => 'Email harus diisi',
-            'email.email' => 'Format Email tidak sesuai',
-            'email.unique' => 'Email sudah terdaftar',
+            'reg_number.required' => 'ID Pengguna harus diisi',
+            'reg_number.min' => 'ID Pengguna minimal 3 karakter',
+            'reg_number.unique' => 'ID Pengguna sudah terdaftar',
         ];
 
         $this->validate($request, $rules, $ruleMessages);
 
         $role = $request->role_id;
         $name = $request->name;
-        $gender = $request->gender;
-        $phoneNumber = $request->phone_number;
-        $avatar = $request->avatar;
-        $email = $request->email;
-        $password = $request->password;
+        $regNumber = $request->reg_number;
 
         DB::beginTransaction();
 
@@ -215,29 +177,9 @@ class UserController extends Controller
 
             $user = User::findOrFail($id);
 
-            if (!empty($avatar)) {
-                $filePath = 'public/uploads/avatar/';
-
-                $storagePath = Storage::put($filePath, $avatar);
-
-                $fileName = basename($storagePath);
-
-                if ($user->avatar == 'user.png') {
-                    $user->avatar = $fileName;
-                } else {
-                    $oldAvatar = $user->avatar;
-                    Storage::delete($filePath . $oldAvatar);
-
-                    $user->avatar = $fileName;
-                }
-            }
-
             $user->role_id = $role;
             $user->name = $name;
-            $user->gender = $gender;
-            $user->phone_number = $phoneNumber;
-            $user->email = $email;
-            $user->password = Hash::make($password);
+            $user->reg_number = $regNumber;
 
             $user->save();
 
@@ -265,13 +207,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-
-        if($user->avatar != 'user.png'){
-            $oldAvatar = $user->avatar;
-            $filePath = 'public/uploads/avatar/';
-    
-            Storage::delete($filePath . $oldAvatar);
-        }
 
         $user->delete();
 
