@@ -50,7 +50,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzQ1MjU1NiwiZXhwIjoxNjA3NDU2MTU2LCJuYmYiOjE2MDc0NTI1NTYsImp0aSI6InlwM3Z0SzFueXFiQ2E0NEEiLCJzdWIiOjMsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.7LNC0Jua4WaXFdATqfZOOdkoLBSc72iVirws8d5HeqM",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzQ4NDc3NiwiZXhwIjoxNjA3NDg4Mzc2LCJuYmYiOjE2MDc0ODQ3NzYsImp0aSI6ImZ5c3hSelRBTEkyWGVTZmkiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.yBqvpN-pfH6bPwVVy15Jm_jO4KS0EDGZ3W_d2QU3_4M",
 							"type": "string"
 						}
 					]
@@ -99,6 +99,249 @@
 						"api",
 						"auth",
 						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "reg_number",
+							"value": "16410100072",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Yuri Dimas Satrio",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzQ4NDc3NiwiZXhwIjoxNjA3NDg4Mzc2LCJuYmYiOjE2MDc0ODQ3NzYsImp0aSI6ImZ5c3hSelRBTEkyWGVTZmkiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.yBqvpN-pfH6bPwVVy15Jm_jO4KS0EDGZ3W_d2QU3_4M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "yuridimas00@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "Pria",
+							"type": "text"
+						},
+						{
+							"key": "phone_number",
+							"value": "081916045736",
+							"type": "text"
+						},
+						{
+							"key": "address",
+							"value": "Perum GMS CD07",
+							"type": "text"
+						},
+						{
+							"key": "is_married",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "birth_date",
+							"value": "1997-10-26",
+							"type": "text"
+						},
+						{
+							"key": "linked_in",
+							"value": "https://www.linkedin.com/in/yuridimas/",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/profile/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzQ4MjU3OCwiZXhwIjoxNjA3NDg2MTc4LCJuYmYiOjE2MDc0ODI1NzgsImp0aSI6IllOMjVuNDdlV3dqRDRmd00iLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.CrMD_cMmWqK9SohfVH8MNG86Huj99j5B9TdcHbxLyYA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/profile/show",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						"show"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Avatar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzQ4NDc3NiwiZXhwIjoxNjA3NDg4Mzc2LCJuYmYiOjE2MDc0ODQ3NzYsImp0aSI6ImZ5c3hSelRBTEkyWGVTZmkiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.yBqvpN-pfH6bPwVVy15Jm_jO4KS0EDGZ3W_d2QU3_4M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": "/C:/Users/Yurid/Pictures/default.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/profile/update/avatar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						"update",
+						"avatar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzQ4ODQ4NiwiZXhwIjoxNjA3NDkyMDg2LCJuYmYiOjE2MDc0ODg0ODYsImp0aSI6IkFHZE8yZERocDJKRGRVZUYiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.xOZkrOIzlsPUFFUriHrjC0K6-ed7ZVXaeLzltdRt2xs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "new_password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "new_password_confirmation",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/profile/update/password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						"update",
+						"password"
 					]
 				}
 			},
