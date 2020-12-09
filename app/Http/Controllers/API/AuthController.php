@@ -69,12 +69,12 @@ class AuthController extends Controller
 
         try {
 
-            if (!$token = auth('api')->attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials)) {
 
                 return response()->json([
                     'status' => false,
                     'code' => Response::HTTP_BAD_REQUEST,
-                    'message' => ''
+                    'message' => 'NIM atau kata sandi Anda salah!'
                 ]);
             }
         } catch (JWTException $e) {
@@ -106,15 +106,20 @@ class AuthController extends Controller
                 $query->latest()->first();
             }])->findOrFail($idUser);
 
-        $entryYear = $user->education->entry_year;
+        if (!empty($user->education->entry_year)) {
 
-        $friends = User::whereHas('education', function ($query) use ($entryYear) {
-            $query->where('entry_year', $entryYear);
-        })->with(['education.faculty' => function ($query) {
-            $query->select('id', 'name');
-        }])->with(['education.major' => function ($query) {
-            $query->select('id', 'name');
-        }])->get();
+            $entryYear = $user->education->entry_year;
+
+            $friends = User::whereHas('education', function ($query) use ($entryYear) {
+                $query->where('entry_year', $entryYear);
+            })->with(['education.faculty' => function ($query) {
+                $query->select('id', 'name');
+            }])->with(['education.major' => function ($query) {
+                $query->select('id', 'name');
+            }])->get();
+        } else {
+            $friends = null;
+        }
 
         return response()->json([
             'status' => true,
@@ -178,14 +183,14 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $rules = [
-            'reg_number' => 'required|exists:users,reg_number',
+            'reg_number' => 'required|unique:users,reg_number',
             'name' => 'required|min:3',
             'password' => 'required|min:8|confirmed',
         ];
 
         $ruleMessages = [
             'reg_number.required' => 'NIM harus diisi',
-            'reg_number.exists' => 'NIM sudah terdaftar',
+            'reg_number.unique' => 'NIM sudah terdaftar',
             'name.required' => 'Nama harus diisi',
             'name.min' => 'Nama minimal 3 karakter',
             'password.required' => 'Kata Sandi harus diisi',
