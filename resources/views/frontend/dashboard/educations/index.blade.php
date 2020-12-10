@@ -34,13 +34,7 @@
                                     @foreach ($educations as $item)
                                     <tr>
                                         <td>{{ $item->graduation_year }}</td>
-                                        <td>
-                                            @forelse($item->user() as $key)
-                                                {{ $key->name }}
-                                            @empty
-                                                ra eneng
-                                            @endforelse
-                                        </td>
+                                        <td>{{ $item->total_user }}</td>
                                         <td class="text-center">
                                             <a href="#"
                                                 class="btn btn-sm btn-secondary">
