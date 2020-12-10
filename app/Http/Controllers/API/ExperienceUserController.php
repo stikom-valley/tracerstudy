@@ -65,7 +65,7 @@ class ExperienceUserController extends Controller
             return response()->json([
                 'status' => false,
                 'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                'message' => $validator,
+                'message' => $validator->errors()->all(),
             ]);
         }
 
@@ -158,7 +158,7 @@ class ExperienceUserController extends Controller
             return response()->json([
                 'status' => false,
                 'code' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                'message' => $validator,
+                'message' => $validator->errors()->all(),
             ]);
         }
 
