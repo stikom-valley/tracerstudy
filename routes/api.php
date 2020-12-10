@@ -40,4 +40,18 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::put('/update/password', 'ProfileController@updatePassword')
             ->name('profile.update.password');
     });
+
+    Route::group(['prefix' => 'experience', 'namespace' => 'API'], function () {
+
+        Route::get('/', 'ExperienceUserController@index')
+            ->name('experience.index');
+        Route::post('/store', 'ExperienceUserController@store')
+            ->name('experience.store');
+        Route::get('/{id}/show', 'ExperienceUserController@show')
+            ->name('experience.show');
+        Route::put('/update/{id}', 'ExperienceUserController@update')
+            ->name('experience.update');
+        Route::delete('/destroy/{id}', 'ExperienceUserController@destroy')
+            ->name('experience.destroy');
+    });
 });
