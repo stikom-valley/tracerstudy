@@ -8,9 +8,6 @@
     <section class="section">
         <div class="section-header">
             <h1>Kompetensi</h1>
-            <div class="section-header-button ml-auto">
-                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalCompetence"><i class="fas fa-plus pr-2"></i>Kompetensi Baru</a>
-            </div>
         </div>
         <div class="section-body">
             <div class="row">
@@ -25,23 +22,20 @@
                                     <thead>
                                         <tr>
                                             <th>Nama</th>
-                                            <th>Email</th>
-                                            <th>Action</th>
+                                            <th>Jumlah Alumni</th>
+                                            <th width="5%">Tindakan</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $item)
+                                        @foreach ($skills as $item)
                                             <tr>
                                                 <td>{{ $item->name }}</td>
-                                                <td>{{ $item->email }}</td>
-                                                <td>
-                                                    <a href="{{ route('competence.show', [$item->id]) }}"
+                                                <td>{{ $item->total_user }}</td>
+                                                <td class="text-center">
+                                                    <a href="#"
                                                         class="btn btn-sm btn-secondary">
-                                                        <i class="fas fa-eye"></i>
+                                                        <i class="fas fa-eye"></i> Lihat
                                                     </a>
-                                                    {{-- <a href="#" class="btn btn-sm btn-info">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a> --}}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -54,47 +48,12 @@
             </div>
         </div>
     </section>
-    @include('frontend.dashboard.competence.create')
 @endsection
 
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
             $("#table-1").dataTable();
-            $('.pilih_alumni').select2();
-            function ajax() {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-            }
-            $(document).on('click', '.delete', function() {
-                var id = $(this).data('id');
-                swal({
-                        title: "Apa kamu yakin ?",
-                        text: "Setelah dihapus, Anda tidak akan dapat memulihkan data ini!",
-                        icon: "warning",
-                        buttons: true,
-                        dangerMode: true,
-                    })
-                    .then((willDelete) => {
-                        if (willDelete) {
-                            ajax();
-                            $.ajax({
-                                url: '{{ url("dashboard/experience")}}/' + id,
-                                method: 'DELETE',
-                                success: function(data) {
-                                 console.log(data);
-                                    swal("Data berhasil dihapus", {
-                                        icon: "success",
-                                    });
-                                }
-                            })
-
-                        }
-                    });
-            })
         });
 
     </script>

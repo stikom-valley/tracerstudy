@@ -6,7 +6,7 @@
     <a href="#">Ts</a>
   </div>
   <ul class="sidebar-menu">
-    <li class="menu-header">Dashboard</li>
+    <li class="menu-header">{{ Auth::user()->title }}</li>
     <li @yield('dashboard')>
       <a class="nav-link" href="{{ route('dashboard') }}">
         <i class="fas fa-columns"></i> <span>Dashboard</span>

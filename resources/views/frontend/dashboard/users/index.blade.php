@@ -75,7 +75,7 @@
                                         <th>ID Pengguna</th>
                                         <th>Nama</th>
                                         <th>Hak Akses</th>
-                                        <th>Action</th>
+                                        <th width="15%">Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,7 +92,7 @@
                                             <div class="badge badge-info">{{ $item->role->name }}</div>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <a href="#" class="btn btn-sm btn-secondary">
                                                 <i class="fas fa-eye"></i>
                                             </a>

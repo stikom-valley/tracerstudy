@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Experience;
 use App\User;
+use App\Experience;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class ExperienceController extends Controller
 {
@@ -17,8 +18,12 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        $user = User::where('role_id', 3)->get();
-        return view('frontend.dashboard.experiences.index', ['users' => $user]);
+        $experiences = Experience::select('id', 'company_name', DB::raw('COUNT(user_id) as total_user'))
+            ->groupBy('company_name')
+            ->get();
+
+        return view('frontend.dashboard.experiences.index')
+            ->with(['experiences' => $experiences]);
     }
 
     /**

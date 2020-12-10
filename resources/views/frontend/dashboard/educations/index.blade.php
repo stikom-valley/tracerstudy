@@ -8,10 +8,6 @@
 <section class="section">
     <div class="section-header">
         <h1>Kelulusan</h1>
-        <div class="section-header-button ml-auto">
-            <a href="{{ route('education.create') }}" class="btn btn-primary"><i
-                    class="fas fa-plus pr-2"></i>Kelulusan Baru</a>
-        </div>
     </div>
     <div class="section-body">
         <div class="row">
@@ -27,7 +23,7 @@
                                     <tr>
                                         <th>Tahun Lulus</th>
                                         <th>Jumlah Alumni</th>
-                                        <th width="15%">Tindakan</th>
+                                        <th width="5%">Tindakan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -38,14 +34,7 @@
                                         <td class="text-center">
                                             <a href="#"
                                                 class="btn btn-sm btn-secondary">
-                                                <i class="fas fa-eye"></i>
-                                            </a>
-                                            <a href="#"
-                                                class="btn btn-sm btn-info">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a href="#" class="btn delete btn-sm btn-danger">
-                                                <i class="fas fa-trash-alt"></i>
+                                                <i class="fas fa-eye"></i> Lihat
                                             </a>
                                         </td>
                                     </tr>
@@ -65,40 +54,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
     $("#table-1").dataTable();
-
-    function ajax() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    }
-    $(document).on('click', '.delete', function () {
-        var id = $(this).data('id');
-        swal({
-                title: "Apa kamu yakin ?",
-                text: "Setelah dihapus, Anda tidak akan dapat memulihkan data ini!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    ajax();
-                    $.ajax({
-                        url: '{{ url("dashboard/question")}}/' + id,
-                        method: 'DELETE',
-                        success: function (data) {
-                            console.log(data);
-                            swal("Data berhasil dihapus", {
-                                icon: "success",
-                            });
-                        }
-                    })
-
-                }
-            });
-    });
     });
 
 </script>

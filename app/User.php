@@ -96,6 +96,17 @@ class User extends Authenticatable implements JWTSubject
         }
     }
 
+    /**
+     * Get the Title
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getTitleAttribute()
+    {
+        return "{$this->role->name} - {$this->reg_number}";
+    }
+
     public function hasRole($roles)
     {
         if (is_array($roles)) {
