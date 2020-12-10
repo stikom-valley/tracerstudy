@@ -21,8 +21,7 @@ class EducationController extends Controller
      */
     public function index()
     {
-        $educations = Education::select('graduation_year', 'id')
-            ->with('user')
+        $educations = Education::select('graduation_year', DB::raw('COUNT(user_id) as total_user'))
             ->groupBy('graduation_year')
             ->orderBy('graduation_year', 'asc')
             ->get();
