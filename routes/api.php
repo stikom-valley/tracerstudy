@@ -68,4 +68,28 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::delete('/destroy/{id}', 'SkillUserController@destroy')
             ->name('skill.destroy');
     });
+
+    Route::group(['prefix' => 'education', 'namespace' => 'API'], function () {
+
+        Route::get("/", "EducationUserController@index")->name("education.index");
+        Route::post("/store", "EducationUserController@store")->name("education.store");
+        Route::get("/{id}/show", "EducationUserController@show")->name("education.show");
+        Route::put("/update/{id}", "EducationUserController@update")->name("education.update");
+        Route::delete("/destroy/{id}", "EducationUserController@destroy")->name("education.destroy");
+    });
+
+    Route::group(['prefix' => 'faculty', 'namespace' => 'API'], function () {
+
+        Route::get("/", "FacultyUserController@index")->name("faculty.index");
+        // Route::post("/store", "FacultyUserController@store")->name("faculty.store");
+        // Route::get("/{id}/show", "FacultyUserController@show")->name("faculty.show");
+        // Route::put("/update/{id}", "FacultyUserController@update")->name("faculty.update");
+        // Route::delete("/destroy/{id}", "FacultyUserController@destroy")->name("faculty.destroy");
+    });
+
+    Route::group(['prefix' => 'major', 'namespace' => 'API'], function () {
+
+        Route::get("/", "MajorUserController@index")->name("major.index");
+        Route::get("/majorbyfaculty", "MajorUserController@getMajorByFaculty")->name("major.byfaculty");
+    });
 });
