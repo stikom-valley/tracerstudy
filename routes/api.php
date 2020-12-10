@@ -54,4 +54,18 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::delete('/destroy/{id}', 'ExperienceUserController@destroy')
             ->name('experience.destroy');
     });
+
+    Route::group(['prefix' => 'skill', 'namespace' => 'API'], function () {
+
+        Route::get('/', 'SkillUserController@index')
+            ->name('skill.index');
+        Route::post('/store', 'SkillUserController@store')
+            ->name('skill.store');
+        Route::get('/{id}/show', 'SkillUserController@show')
+            ->name('skill.show');
+        Route::post('/update/{id}', 'SkillUserController@update')
+            ->name('skill.update');
+        Route::delete('/destroy/{id}', 'SkillUserController@destroy')
+            ->name('skill.destroy');
+    });
 });
