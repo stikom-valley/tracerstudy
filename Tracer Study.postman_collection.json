@@ -7,6 +7,443 @@
 	},
 	"item": [
 		{
+			"name": "Experiences",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2MjkzMCwiZXhwIjoxNjA3NTY2NTMwLCJuYmYiOjE2MDc1NjI5MzAsImp0aSI6IktkZ0JmYUNZZjVKbHRmbEwiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.N-ptIQd3-nzDbLmEVWsp7wv2laS990OGoRlvt9WWXEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/experience",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"experience"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2MjkzMCwiZXhwIjoxNjA3NTY2NTMwLCJuYmYiOjE2MDc1NjI5MzAsImp0aSI6IktkZ0JmYUNZZjVKbHRmbEwiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.N-ptIQd3-nzDbLmEVWsp7wv2laS990OGoRlvt9WWXEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "company_name",
+									"value": "GNFI",
+									"type": "text"
+								},
+								{
+									"key": "job_title",
+									"value": "Web Developer",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2019-11-02",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2020-03-10",
+									"type": "text"
+								},
+								{
+									"key": "is_present",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Membuat aplikasi tautan, good form",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "Ketintang, Surabaya",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/experience/store",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"experience",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2MjkzMCwiZXhwIjoxNjA3NTY2NTMwLCJuYmYiOjE2MDc1NjI5MzAsImp0aSI6IktkZ0JmYUNZZjVKbHRmbEwiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.N-ptIQd3-nzDbLmEVWsp7wv2laS990OGoRlvt9WWXEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "company_name",
+									"value": "Good News From Indonesia",
+									"type": "text"
+								},
+								{
+									"key": "job_title",
+									"value": "Web Developer",
+									"type": "text"
+								},
+								{
+									"key": "start_date",
+									"value": "2019-11-02",
+									"type": "text"
+								},
+								{
+									"key": "end_date",
+									"value": "2020-03-10",
+									"type": "text"
+								},
+								{
+									"key": "is_present",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Membuat aplikasi tautan, good form",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "Ketintang, Surabaya",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/experience/update/143",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"experience",
+								"update",
+								"143"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2MjkzMCwiZXhwIjoxNjA3NTY2NTMwLCJuYmYiOjE2MDc1NjI5MzAsImp0aSI6IktkZ0JmYUNZZjVKbHRmbEwiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.N-ptIQd3-nzDbLmEVWsp7wv2laS990OGoRlvt9WWXEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/experience/143/show",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"experience",
+								"143",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2MjkzMCwiZXhwIjoxNjA3NTY2NTMwLCJuYmYiOjE2MDc1NjI5MzAsImp0aSI6IktkZ0JmYUNZZjVKbHRmbEwiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.N-ptIQd3-nzDbLmEVWsp7wv2laS990OGoRlvt9WWXEM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/experience/destroy/143",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"experience",
+								"destroy",
+								"143"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Skills",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2NDQ4MCwiZXhwIjoxNjA3NTY4MDgwLCJuYmYiOjE2MDc1NjQ0ODAsImp0aSI6InNTMEhPZ2dtajI0eXhtV0oiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.pF9mU9zAVFBh1Ej0Qs13fxopDvJEKWo5GG62iW3EW_U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/skill",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"skill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2NDQ4MCwiZXhwIjoxNjA3NTY4MDgwLCJuYmYiOjE2MDc1NjQ0ODAsImp0aSI6InNTMEhPZ2dtajI0eXhtV0oiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.pF9mU9zAVFBh1Ej0Qs13fxopDvJEKWo5GG62iW3EW_U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "API DEV",
+									"type": "text"
+								},
+								{
+									"key": "certification_document",
+									"type": "file",
+									"src": "/C:/Users/Yurid/Documents/Test.pdf"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/skill/store",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"skill",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2NDQ4MCwiZXhwIjoxNjA3NTY4MDgwLCJuYmYiOjE2MDc1NjQ0ODAsImp0aSI6InNTMEhPZ2dtajI0eXhtV0oiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.pF9mU9zAVFBh1Ej0Qs13fxopDvJEKWo5GG62iW3EW_U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Web Dev",
+									"type": "text"
+								},
+								{
+									"key": "certification_document",
+									"type": "file",
+									"src": "/C:/Users/Yurid/Documents/Test.pdf",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/skill/update/286",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"skill",
+								"update",
+								"286"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2NDQ4MCwiZXhwIjoxNjA3NTY4MDgwLCJuYmYiOjE2MDc1NjQ0ODAsImp0aSI6InNTMEhPZ2dtajI0eXhtV0oiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.pF9mU9zAVFBh1Ej0Qs13fxopDvJEKWo5GG62iW3EW_U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/skill/286/show",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"skill",
+								"286",
+								"show"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2NDQ4MCwiZXhwIjoxNjA3NTY4MDgwLCJuYmYiOjE2MDc1NjQ0ODAsImp0aSI6InNTMEhPZ2dtajI0eXhtV0oiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.pF9mU9zAVFBh1Ej0Qs13fxopDvJEKWo5GG62iW3EW_U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/skill/destroy/286",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"skill",
+								"destroy",
+								"286"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "Login",
 			"request": {
 				"method": "POST",
@@ -16,12 +453,12 @@
 					"urlencoded": [
 						{
 							"key": "reg_number",
-							"value": "42989123306",
+							"value": "16410100072",
 							"type": "text"
 						},
 						{
 							"key": "password",
-							"value": "password",
+							"value": "12345678",
 							"type": "text"
 						}
 					]
@@ -50,7 +487,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzQ4NDc3NiwiZXhwIjoxNjA3NDg4Mzc2LCJuYmYiOjE2MDc0ODQ3NzYsImp0aSI6ImZ5c3hSelRBTEkyWGVTZmkiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.yBqvpN-pfH6bPwVVy15Jm_jO4KS0EDGZ3W_d2QU3_4M",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2NDQ4MCwiZXhwIjoxNjA3NTY4MDgwLCJuYmYiOjE2MDc1NjQ0ODAsImp0aSI6InNTMEhPZ2dtajI0eXhtV0oiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.pF9mU9zAVFBh1Ej0Qs13fxopDvJEKWo5GG62iW3EW_U",
 							"type": "string"
 						}
 					]
@@ -81,7 +518,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzQ1MjU1NiwiZXhwIjoxNjA3NDU2MTU2LCJuYmYiOjE2MDc0NTI1NTYsImp0aSI6InlwM3Z0SzFueXFiQ2E0NEEiLCJzdWIiOjMsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.7LNC0Jua4WaXFdATqfZOOdkoLBSc72iVirws8d5HeqM",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwNzU2NDQ4MCwiZXhwIjoxNjA3NTY4MDgwLCJuYmYiOjE2MDc1NjQ0ODAsImp0aSI6InNTMEhPZ2dtajI0eXhtV0oiLCJzdWIiOjc0LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.pF9mU9zAVFBh1Ej0Qs13fxopDvJEKWo5GG62iW3EW_U",
 							"type": "string"
 						}
 					]
