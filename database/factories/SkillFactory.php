@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Skill::class, function (Faker $faker) {
     return [
-        'name' => $faker->unique($maxRetries = 50000)->randomElement([
+        'name' => $faker->randomElement([
             'Adobe XD',
             'PHP',
             'JAVA',
