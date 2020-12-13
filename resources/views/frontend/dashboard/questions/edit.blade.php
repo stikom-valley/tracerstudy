@@ -10,7 +10,7 @@
         <div class="section-header-back">
             <a href="{{ route('question.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-        <h1>{!! $question->description !!}</h1>
+        <p>{!! $question->description !!}</p>
         <div class="section-header-button ml-auto">
             <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#create-answer-modal"><i
                     class="fas fa-plus pr-2"></i>Jawaban Baru</a>
