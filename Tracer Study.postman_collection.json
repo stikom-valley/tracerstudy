@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b48e68fb-09d2-477b-9634-57a98ff3d17e",
+		"_postman_id": "ab2de2ba-d702-43bf-b8f1-e5f070393aa9",
 		"name": "Tracer Study",
 		"description": "Sebuah proyek **Matakuliah TBD**",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -436,6 +436,259 @@
 								"destroy",
 								"286"
 							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Education",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwODEyODI1NCwiZXhwIjoxNjA4MTMxODU0LCJuYmYiOjE2MDgxMjgyNTQsImp0aSI6IlQ2WHFNS0E5SG9sODVTd1giLCJzdWIiOjgsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.v_-8XnBIFkLHa7NN7b2eFG5qScDrx-xiPxeEgZhNF5g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "entry_year",
+									"value": "2014",
+									"type": "text"
+								},
+								{
+									"key": "graduation_year",
+									"value": "2018",
+									"type": "text"
+								},
+								{
+									"key": "score",
+									"value": "3.65",
+									"type": "text"
+								},
+								{
+									"key": "faculty_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "major_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/education/store",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"education",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwODEyODI1NCwiZXhwIjoxNjA4MTMxODU0LCJuYmYiOjE2MDgxMjgyNTQsImp0aSI6IlQ2WHFNS0E5SG9sODVTd1giLCJzdWIiOjgsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.v_-8XnBIFkLHa7NN7b2eFG5qScDrx-xiPxeEgZhNF5g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "entry_year",
+									"value": "2014",
+									"type": "text"
+								},
+								{
+									"key": "graduation_year",
+									"value": "2018",
+									"type": "text"
+								},
+								{
+									"key": "score",
+									"value": "3.65",
+									"type": "text"
+								},
+								{
+									"key": "faculty_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "major_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/education/store",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"education",
+								"store"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "destroy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwODEyODI1NCwiZXhwIjoxNjA4MTMxODU0LCJuYmYiOjE2MDgxMjgyNTQsImp0aSI6IlQ2WHFNS0E5SG9sODVTd1giLCJzdWIiOjgsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.v_-8XnBIFkLHa7NN7b2eFG5qScDrx-xiPxeEgZhNF5g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/education/destroy/73",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"education",
+								"destroy",
+								"73"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Major",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "majorbyfaculty",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTYwODEyODI1NCwiZXhwIjoxNjA4MTMxODU0LCJuYmYiOjE2MDgxMjgyNTQsImp0aSI6IlQ2WHFNS0E5SG9sODVTd1giLCJzdWIiOjgsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.v_-8XnBIFkLHa7NN7b2eFG5qScDrx-xiPxeEgZhNF5g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/major/majorbyfaculty?faculty_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"major",
+								"majorbyfaculty"
+							],
+							"query": [
+								{
+									"key": "faculty_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Faculty",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
