@@ -22,7 +22,7 @@ class EducationUserController extends Controller
     public function index()
     {
         $idUser = auth()->user()->id;
-        $education = Education::where('user_id', $idUser->id)->latest()->get();
+        $education = Education::where('user_id', $idUser)->latest()->get();
 
         return response()->json([
             'status' => true,
@@ -49,8 +49,8 @@ class EducationUserController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'entry_year' => 'required|integer|min:' . date('Y'),
-            'graduation_year' => 'required|integer|min:' . date('Y'),
+            'entry_year' => 'required|integer|digits:4',
+            'graduation_year' => 'required|integer|max:' . date('Y'),
             'score' => 'required|between:0,4',
             'faculty_id' => 'required',
             'major_id' => 'required'
@@ -91,7 +91,8 @@ class EducationUserController extends Controller
             $major = Major::findOrFail($request->get('major_id'));
             $education->major_id = $major->id;
             $faculty = Faculty::findOrFail($request->get('faculty_id'));
-            $education = $faculty->id;
+            $education->faculty_id = $faculty->id;
+            $education->user_id = $idUser;
             $education->save();
 
             DB::commit();
@@ -99,7 +100,7 @@ class EducationUserController extends Controller
             return response()->json([
                 'status' => true,
                 'code' => Response::HTTP_CREATED,
-                'message' => 'Data Pendidikan berhadil ditambahkan'
+                'message' => 'Data Pendidikan berhasil ditambahkan'
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -151,8 +152,8 @@ class EducationUserController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'entry_year' => 'required|integer|min:' . date('Y'),
-            'graduation_year' => 'required|integer|min:' . date('Y'),
+            'entry_year' => 'required|integer|digits:4',
+            'graduation_year' => 'required|integer|max:' . date('Y'),
             'score' => 'required|between:0,4',
             'faculty_id' => 'required',
             'major_id' => 'required'
@@ -164,7 +165,7 @@ class EducationUserController extends Controller
             'entry_year.min' => 'Tahun masuk minimal',
             'graduation_year.required' => 'Tahun lulus harus diisi',
             'graduation_year.integer' => 'Tahun lulus harus integer',
-            'graduation_year.min' => 'Tahun lulus minimal',
+            'graduation_year.max' => 'Tahun lulus maksimal ' . date('Y'),
             'score.required' => 'IPK harus diisi',
             'score.between' => 'IPK harus diantara 0 sampai 4',
             'faculty_id.required' => 'id fakultas harus diisi',
@@ -193,7 +194,8 @@ class EducationUserController extends Controller
             $major = Major::findOrFail($request->get('major_id'));
             $education->major_id = $major->id;
             $faculty = Faculty::findOrFail($request->get('faculty_id'));
-            $education = $faculty->id;
+            $education->faculty_id = $faculty->id;
+            $education->user_id = $idUser;
             $education->save();
 
             DB::commit();
@@ -201,7 +203,7 @@ class EducationUserController extends Controller
             return response()->json([
                 'status' => true,
                 'code' => Response::HTTP_CREATED,
-                'message' => 'Data Pendidikan berhadil diperbarui'
+                'message' => 'Data Pendidikan berhasil diperbarui'
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
