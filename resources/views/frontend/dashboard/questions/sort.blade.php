@@ -5,12 +5,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title text-success" id="show-sort-modalLabel"><i
-                        class="fas fa-sort pr-2"></i>Urutan Pertanyaan</h5>
+                        class="fas fa-sort pr-2"></i>Urutan Pertanyaan Kuisioner</h5>
             </div>
             <div class="modal-body">
                 <div class="dd" id="nestable">
                     <ol class="dd-list">
-                        @forelse ($questions as $item)
+                        @forelse ($questionEssays as $item)
                             <li class="dd-item" data-id="{{ $item->id }}">
                                 <div class="dd-handle btn btn-light btn-block">
                                     {!! $item->description !!}

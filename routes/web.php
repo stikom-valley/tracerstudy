@@ -70,7 +70,7 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
                 ->name('question.sort');
 
             // * Jawaban
-            Route::resource('answer', 'AnswerController');
+            Route::resource('choice', 'ChoiceController');
 
             // * Kelulusan
             Route::resource('education', 'EducationController');

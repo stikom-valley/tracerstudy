@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Answer;
+use App\Choice;
 use App\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +20,13 @@ class QuestionController extends Controller
     public function index()
     {
         $questions = Question::all();
-        return view('frontend.dashboard.questions.index', ['questions' => $questions]);
+        $questionEssays = Question::where('type_question', 'GENERAL')->get();
+
+        return view('frontend.dashboard.questions.index')
+            ->with([
+                'questions' => $questions,
+                'questionEssays' => $questionEssays,
+            ]);
     }
 
     /**
@@ -42,22 +48,31 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'type_questions' => 'required',
+            'type_answers' => 'required_if:type_questions,GENERAL',
             'description' => 'required|min:10',
         ];
 
         $ruleMessages = [
+            'type_questions.required' => 'Tipe Pertanyaan harus dipilih',
+            'type_answers.required_if' => 'Tipe Jawaban harus dipilih',
             'description.required' => 'Pertanyaan harus diisi',
             'description.min' => 'Pertanyaan minimal 10 karakter',
         ];
 
-        $sequence = Question::count();
+        $this->validate($request, $rules, $ruleMessages);
+
+        $sequence = Question::where('type_question', 'GENERAL')
+            ->count();
 
         $sequence += 1;
 
         $question = new Question();
 
         $question->description = $request->description;
-        $question->sequence = $sequence;
+        $question->type_question = $request->type_questions;
+        $question->type_answer = ($request->type_questions) == 'BOT' ? 'ESSAY' : $request->type_answers;
+        $question->sequence = ($request->type_questions) == 'BOT' ? null : $sequence;
 
         $question->save();
 
@@ -87,13 +102,13 @@ class QuestionController extends Controller
     {
         $question = Question::findOrFail($id);
 
-        $answers = Answer::where('question_id', $id)
+        $choices = Choice::where('question_id', $id)
             ->get();
 
         return view('frontend.dashboard.questions.edit')
             ->with([
                 'question' => $question,
-                'answers' => $answers,
+                'choices' => $choices,
             ]);
     }
 

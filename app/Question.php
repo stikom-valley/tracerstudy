@@ -13,11 +13,13 @@ class Question extends Model
      */
     protected $fillable = [
         'description',
-        'type'
+        'type_question',
+        'type_answer',
+        'sequence'
     ];
 
-    public function answers()
+    public function choices()
     {
-        return $this->hasMany('App\Answer');
+        return $this->hasMany('App\Choice');
     }
 }

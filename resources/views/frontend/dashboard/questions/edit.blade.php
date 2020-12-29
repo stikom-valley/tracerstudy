@@ -11,17 +11,20 @@
             <a href="{{ route('question.index') }}" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
         <p>{!! $question->description !!}</p>
+        @if ($question->type_answer == 'CHOICE')
         <div class="section-header-button ml-auto">
-            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#create-answer-modal"><i
-                    class="fas fa-plus pr-2"></i>Jawaban Baru</a>
+            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#create-choice-modal"><i
+                    class="fas fa-plus pr-2"></i>Pilihan Baru</a>
         </div>
+        @endif
     </div>
     <div class="section-body">
+        @if($question->type_answer == 'CHOICE')
         <div class="row">
             <div class="col-sm-12">
                 <div class="card card-dark">
                     <div class="card-header">
-                        <h4 class="text-dark"><i class="fas fa-list pr-2"></i>Daftar Jawaban</h4>
+                        <h4 class="text-dark"><i class="fas fa-list pr-2"></i>Daftar Pilihan</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -33,7 +36,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($answers as $item)
+                                    @foreach ($choices as $item)
                                     <tr>
                                         <td>{{ $item->description }}</td>
                                         <td class="text-center">
@@ -53,11 +56,12 @@
                 </div>
             </div>
         </div>
+        @endif
         <div class="row">
             <div class="col-12">
-                <div class="card card-primary">
+                <div class="card card-info">
                     <div class="card-header">
-                        <h4 class="text-primary"><i class="fas fa-plus pr-2"></i> Pertanyaan Baru</h4>
+                        <h4 class="text-info"><i class="fas fa-edit pr-2"></i> Edit Pertanyaan</h4>
                     </div>
                     <form action="{{ route('question.update', $question->id) }}" method="post">
                         @method('PUT')
@@ -69,8 +73,8 @@
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="card-footer text-right">
-                            <button type="submit" class="btn btn-primary"><i
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-block btn-info"><i
                                     class="fas fa-save pr-2"></i>Perbarui</button>
                         </div>
                     </form>
@@ -79,7 +83,7 @@
         </div>
     </div>
 </section>
-@include('frontend.dashboard.answers.create')
+@include('frontend.dashboard.choices.create')
 @endsection
 
 @section('scripts')
@@ -87,9 +91,9 @@
     $(document).ready(function(){
         $("#table-1").dataTable();
     
-        $('#btn-save-answer').click(function (e) {
+        $('#btn-save-choice').click(function (e) {
             e.preventDefault();
-            var form = $('#form-create-answer');
+            var form = $('#form-create-choice');
 
             $.ajax({
                     method: 'POST',
@@ -111,8 +115,8 @@
                 });
         });
 
-        $('#btn-cancel-save-answer').click(function (e) {
-            var form = $('#form-create-answer');
+        $('#btn-cancel-save-choice').click(function (e) {
+            var form = $('#form-create-choice');
             form.find('.message').html('');
             $("#description").val('');
         });

@@ -28,6 +28,8 @@
                                 <thead>
                                     <tr>
                                         <th>Pertanyaan</th>
+                                        <th>Tipe Pertanyaan</th>
+                                        <th>Tipe Jawaban</th>
                                         <th width="15%">Tindakan</th>
                                     </tr>
                                 </thead>
@@ -35,6 +37,20 @@
                                     @foreach ($questions as $item)
                                     <tr>
                                         <td>{!! $item->description !!}</td>
+                                        <td>
+                                            @if ($item->type_question == 'BOT')
+                                                <span class="badge badge-primary">BOT</span>
+                                                @else
+                                                <span class="badge badge-success">KUISIONER</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->type_answer == 'ESSAY')
+                                                <span class="badge badge-warning">ESSAY</span>
+                                                @else
+                                                <span class="badge badge-info">PILIHAN</span>
+                                            @endif
+                                        </td>
                                         <td class="text-center">
                                             <a href="{{ route('question.show', [$item->id]) }}"
                                                 class="btn btn-sm btn-secondary">

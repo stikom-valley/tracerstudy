@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('role_id')->index();
             $table->string('name');
             $table->string('reg_number')->unique();
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('gender', ['Pria', 'Wanita'])->nullable();

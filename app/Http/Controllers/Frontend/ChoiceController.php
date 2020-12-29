@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Answer;
-use App\Question;
+use App\Choice;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class AnswerController extends Controller
+class ChoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +17,7 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        $answer = Answer::all();
-        $question = Question::all();
-        return view('', ['answer' => $answer, 'question' => $question]);
+        //
     }
 
     /**
@@ -73,7 +70,7 @@ class AnswerController extends Controller
         $idQuestion = $request->question_id;
         $description = $request->description;
 
-        $answer = new Answer();
+        $answer = new Choice();
 
         $answer->question_id = $idQuestion;
         $answer->description = $description;
@@ -90,10 +87,10 @@ class AnswerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Choice  $choice
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Choice $choice)
     {
         //
     }
@@ -101,10 +98,10 @@ class AnswerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Choice  $choice
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Choice $choice)
     {
         //
     }
@@ -113,38 +110,22 @@ class AnswerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Choice  $choice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Choice $choice)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'slug' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
-        }
-
-        $question = Question::findOrFail($request->get('id'));
-        $answer = Answer::find($id);
-        $answer->description = $request->get('description');
-        $answer->question_id = $question->id;
-        $answer->save();
-        return redirect() -> route('');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Choice  $choice
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Choice $choice)
     {
-       $answer = Answer::findOrFail($id);
-       $answer->delete();
-       return redirect() -> route('');
+        //
     }
 }
