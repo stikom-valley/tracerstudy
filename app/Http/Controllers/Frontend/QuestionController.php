@@ -103,7 +103,7 @@ class QuestionController extends Controller
     {
         $question = Question::findOrFail($id);
         $choice = Choice::where('question_id', $id)->get();
-      
+
         return view('frontend.dashboard.questions.show', ['question' => $question, 'choice' => $choice]);
     }
 
@@ -137,8 +137,7 @@ class QuestionController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'description' => 'required',
-            'type' => 'required'
+            'description' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -147,9 +146,8 @@ class QuestionController extends Controller
 
         $faculty = Question::findOrFail($id);
         $faculty->description = $request->get('description');
-        $faculty->type = $request->get('type');
         $faculty->save();
-        return redirect()->route('');
+        return redirect()->route('question.index');
     }
 
     /**
