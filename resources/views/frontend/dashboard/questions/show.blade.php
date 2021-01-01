@@ -42,67 +42,61 @@
                         </div>
                     </div>
                 </div>
-                @if($question->type_answer == 'CHOICE')
-                <div class="col-12">
-                    <div class="card card-primary">
+                @if ($question->type_answer == 'CHOICE')
+                    <div class="col-12">
+                        <div class="card card-primary">
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Daftar Jawaban</th>
-                                            <th width="15%">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        @foreach ($choice as $row)
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped mb-0">
+                                        <thead>
                                             <tr>
-                                                <td>
-                                                    {{$loop->iteration}}
-                                                </td>
-                                                <td>
-                                                    {{$row->description}}
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="#" data-id="{{$row->id}}" class="btn delete btn-sm btn-danger">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </a>
-                                                    <a href="#" data-id="{{$row->id}}" class="btn delete btn-sm btn-info">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                </td>
+                                                <th>No</th>
+                                                <th>Daftar Jawaban</th>
 
                                             </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            @foreach ($choice as $row)
+                                                <tr>
+                                                    <td>
+                                                        {{ $loop->iteration }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $row->description }}
+                                                    </td>
 
 
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                                </tr>
+
+
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endif
             </div>
         </div>
     </section>
 @endsection
 @section('scripts')
-<script>
-    $(document).ready(function(){
-        function ajax() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    <script>
+        $(document).ready(function() {
+            function ajax() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
             }
-        });
-    }
 
 
-  
-    })
-</script>
+
+        })
+
+    </script>
 @endsection

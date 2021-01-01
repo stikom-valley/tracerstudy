@@ -144,10 +144,10 @@ class QuestionController extends Controller
             return redirect()->back()->withErrors($validator->errors());
         }
 
-        $faculty = Question::findOrFail($id);
-        $faculty->description = $request->get('description');
-        $faculty->save();
-        return redirect()->route('question.index');
+        $question = Question::findOrFail($id);
+        $question->description = $request->get('description');
+        $question->save();
+        return redirect()->route('question.index')->with('success', 'Pertanyaan berhasil diubah');
     }
 
     /**
