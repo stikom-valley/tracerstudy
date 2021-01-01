@@ -124,8 +124,29 @@ class ChoiceController extends Controller
      * @param  \App\Choice  $choice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Choice $choice)
+    public function destroy(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $choicedel = Choice::findOrFail($id)->delete();
+
+            return response()->json([
+                'code' => Response::HTTP_OK,
+                'status' => true,
+                'message' => 'Jawaban Pilihan berhasil dihapus'
+            ]);
+        }
+    }
+
+    public function deleteAllChoice(Request $request, $id){
+        if($request->ajax()){
+            $choice = Choice::where('question_id', $id)->delete();
+
+            return response()->json([
+                'code' => Response::HTTP_OK,
+                'status' => true,
+                'message' => 'Jawaban Pilihan berhasil dihapus'
+            ]);
+
+        }
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Choice;
 use App\Question;
+use App\AnswerUser;
+use App\AnswerEssay;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -51,6 +53,8 @@ class QuestionController extends Controller
             'type_questions' => 'required',
             'type_answers' => 'required_if:type_questions,GENERAL',
             'description' => 'required|min:10',
+            // 'type_answers.*' => 'required|string|min:5',
+
         ];
 
         $ruleMessages = [
@@ -73,8 +77,16 @@ class QuestionController extends Controller
         $question->type_question = $request->type_questions;
         $question->type_answer = ($request->type_questions) == 'BOT' ? 'ESSAY' : $request->type_answers;
         $question->sequence = ($request->type_questions) == 'BOT' ? null : $sequence;
-
         $question->save();
+        if ($request->type_answers == 'CHOICE') {
+            $datadesc = $request->description_choice;
+            foreach ($datadesc as $row) {
+                $choice = new Choice();
+                $choice->description = strip_tags($row);
+                $choice->question_id = $question->id;
+                $choice->save();
+            }
+        }
 
         return redirect()
             ->route('question.index')
@@ -89,7 +101,10 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $choice = Choice::where('question_id', $id)->get();
+      
+        return view('frontend.dashboard.questions.show', ['question' => $question, 'choice' => $choice]);
     }
 
     /**
@@ -143,11 +158,29 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $question = Question::findOrFail($id);
-        $question->delete();
-        return redirect()->route('');
+        if ($request->ajax()) {
+            $question = Question::findOrFail($id);
+            $choice = Choice::where('question_id', $id)->count();
+            $answeressay = AnswerEssay::where('question_id', $id)->count();
+            $data = '';
+            if ($choice > 0 || $answeressay > 0) {
+                $data = 'Maaf, tidak bisa menghapus pertanyaan ini';
+                $message = [
+                    'status' => false,
+                    'message' => $data
+                ];
+            } else {
+                $question->delete();
+                $data = 'Pertanyaan berhasil dihapus';
+                $message = [
+                    'status' => true,
+                    'message' => $data
+                ];
+            }
+            return response()->json($message);
+        }
     }
 
     public function sort(Request $request)
@@ -169,7 +202,7 @@ class QuestionController extends Controller
                 $link->save();
 
                 DB::commit();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 DB::rollback();
                 Log::error($e);
             }

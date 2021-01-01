@@ -60,7 +60,7 @@
                                                 class="btn btn-sm btn-info">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a href="#" class="btn delete btn-sm btn-danger">
+                                            <a href="#" data-id="{{$item->id}}" class="btn delete btn-sm btn-danger">
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </td>
@@ -106,10 +106,17 @@
                         url: '{{ url("dashboard/question")}}/' + id,
                         method: 'DELETE',
                         success: function (data) {
-                            console.log(data);
-                            swal("Data berhasil dihapus", {
+                            if(data['status']==true){
+                                swal(data['message'], {
                                 icon: "success",
-                            });
+                              });
+                              setTimeout(function(){window.location.href="{{route('question.index')}}"},1500);
+                            }else if(data['status']==false){
+                                swal(data['message'], {
+                                icon: "error",
+                              });
+                            }
+
                         }
                     })
 

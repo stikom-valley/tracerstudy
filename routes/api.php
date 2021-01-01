@@ -78,6 +78,14 @@ Route::group(['middleware' => ['jwt.auth']], function () {
         Route::delete("/destroy/{id}", "EducationUserController@destroy")->name("education.destroy");
     });
 
+    Route::group(['prefix' => 'question', 'namespace' => 'API'], function () {
+        Route::get('/','QuestionController@index')->name('question.index');
+    });
+
+    Route::group(['prefix' => 'kuesioner','namespace'=>'API'], function () {
+        Route::post('/store','KuesionerController@store');
+    });
+
     Route::group(['prefix' => 'faculty', 'namespace' => 'API'], function () {
 
         Route::get("/", "FacultyUserController@index")->name("faculty.index");

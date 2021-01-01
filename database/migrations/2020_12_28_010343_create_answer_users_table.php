@@ -15,9 +15,9 @@ class CreateAnswerUsersTable extends Migration
     {
         Schema::create('answer_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('answer_essay_id')->constrained('answer_essays')->onDelete('cascade');
+            $table->foreignId('answer_essay_id')->nullable()->constrained('answer_essays')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('choice_id')->constrained('choices')->onDelete('cascade');
+            $table->foreignId('choice_id')->nullable()->constrained('choices')->onDelete('cascade');
             $table->timestamps();
         });
     }

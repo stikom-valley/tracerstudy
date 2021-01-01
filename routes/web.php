@@ -70,7 +70,11 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
                 ->name('question.sort');
 
             // * Jawaban
-            Route::resource('choice', 'ChoiceController');
+            Route::group(['prefix' => 'choice','as'=>'choice.'], function () {
+                Route::delete('/allchoice/{id}','ChoiceController@deleteAllChoice');
+                Route::resource('/', 'ChoiceController');
+            });
+
 
             // * Kelulusan
             Route::resource('education', 'EducationController');
