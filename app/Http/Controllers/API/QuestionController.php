@@ -39,28 +39,43 @@ class QuestionController extends Controller
         }
 
         $question = Question::where('type_question', $request->get('type_question'))->where('type_answer', $request->get('type_answer'))->get();
-
         $arr = [];
         $data = [];
-
-        foreach ($question as $row) {
-            $y['question_id'] = $row->id;
-            $y['description'] = $row->description;
-            $y['type_answer'] = $row->type_answer;
-            $y['type_question'] = $row->type_question;
-            if ($request->get('type_answer') == 'CHOICE') {
+        if ($request->get('type_answer') == 'CHOICE') {
+            //push answer by question id
+            foreach ($question as $row) {
                 $choice = Choice::where('question_id', $row->id)->get();
                 foreach ($choice as $rowchoice) {
                     $x['choice_id'] = $rowchoice->id;
+                    $x['question_id'] = $rowchoice->question_id;
                     $x['answer_choice'] = $rowchoice->description;
                     array_push($arr, $x);
                 }
-                $y['answer'] = $arr;
             }
-            array_push($data, $y);
+            //group array by question id
+            $result = array();
+            foreach ($arr as $key => $element) {
+                $result[$element['question_id']][] = $element;
+            }
+            //menggabungkan 2 array, answer and question
+            foreach ($result as $key => $rowvalue) {
+                foreach ($question as $keyq => $datavalue) {
+                    if ($key == $datavalue->id) {
+                        $y['question_id'] = $datavalue->id;
+                        $y['description'] = $datavalue->description;
+                        $y['type_answer'] = $datavalue->type_answer;
+                        $y['type_question'] = $datavalue->type_question;
+                        $y['sequence'] = $datavalue->sequence;
+                        $y['created_at'] = $datavalue->created_at;
+                        $y['updated_at'] = $datavalue->updated_at;
+                        $y['answer'] = $result[$key];
+                        array_push($data, $y);
+                    }
+                }
+            }
+        } elseif ($request->get('type_answer') == 'ESSAY') {
+            $data = Question::where('type_question', $request->get('type_question'))->where('type_answer', $request->get('type_answer'))->get();
         }
-
-
         return response()->json([
             'status' => true,
             'code' => Response::HTTP_OK,
