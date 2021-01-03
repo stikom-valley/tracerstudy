@@ -32,7 +32,8 @@
                                             <div class="slash"></div> Web Developer
                                         </div>
                                     </div>
-                                    <button class="btn btn-block btn-outline-info"><i class="fab fa-linkedin-in"></i>
+                                    <button class="btn btn-block btn-outline-info" id="linked_in"><i
+                                            class="fab fa-linkedin-in"></i>
                                         Sinkronisasi dengan LinkedIn</button>
                                 </div>
                             </div>
@@ -65,9 +66,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label>LinkedIn</label>
-                                            <input type="text" class="form-control" name="linked_in"
+                                            <input type="text" class="form-control" name="linked_in" id="linked_in_id"
                                                 value="{{ Auth()->user()->linked_in }}"
-                                                placeholder="Masukkan Link Profile Linkedin" required>
+                                                placeholder="Masukkan Link Profile Linkedin">
                                         </div>
                                     </div>
                                     <div class="card-footer text-right">
@@ -84,4 +85,32 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).on('click', '#linked_in', (event) => {
+            event.preventDefault();
+            let linked_in = $('#linked_in_id').val()
+
+            if (!linked_in) {
+                alert('data kosong')
+            } else {
+                console.log('work');
+                $.ajax({
+                    url: 'http://localhost:3000/api/linkedin',
+                    type: 'POST',
+                    data: {
+                        linkedin: linked_in
+                    },
+                    dataType: 'JSON',
+                    success: response => {
+                        console.log(response);
+                    },
+                    error: error => {
+                        console.error(error);
+                    }
+                })
+            }
+
+        })
+
+    </script>
 @endsection
