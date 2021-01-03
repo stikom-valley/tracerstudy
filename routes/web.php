@@ -27,6 +27,9 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     Route::get('/', 'Frontend\DashboardController@index')
         ->name('dashboard');
 
+    Route::get('/profile', 'ProfileController@index')
+        ->name('profile');
+
     Route::group(['middleware' => ['role:bpa,warek-alumni']], function () {
 
         // * Pengguna
@@ -70,8 +73,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
                 ->name('question.sort');
 
             // * Jawaban
-            Route::group(['prefix' => 'choice','as'=>'choice.'], function () {
-                Route::delete('/allchoice/{id}','ChoiceController@deleteAllChoice');
+            Route::group(['prefix' => 'choice', 'as' => 'choice.'], function () {
+                Route::delete('/allchoice/{id}', 'ChoiceController@deleteAllChoice');
                 Route::resource('/', 'ChoiceController');
             });
 
