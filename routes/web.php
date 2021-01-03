@@ -29,6 +29,8 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 
     Route::get('/profile', 'ProfileController@index')
         ->name('profile');
+    Route::put('/profile', 'ProfileController@update')
+        ->name('profile.update');
 
     Route::group(['middleware' => ['role:bpa,warek-alumni']], function () {
 
