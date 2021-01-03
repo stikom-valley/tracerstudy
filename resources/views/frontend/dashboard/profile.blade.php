@@ -81,6 +81,7 @@
                 </div>
             </div>
         </div>
+        <div class="overlay"></div>
     </section>
 @endsection
 
@@ -102,7 +103,7 @@
                     },
                     dataType: 'JSON',
                     success: response => {
-                        console.log(response);
+                        console.log(response.data);
                     },
                     error: error => {
                         console.error(error);
@@ -111,6 +112,16 @@
             }
 
         })
+
+        // Add remove loading class on body element depending on Ajax request status
+        $(document).on({
+            ajaxStart: function() {
+                $("body").addClass("loading");
+            },
+            ajaxStop: function() {
+                $("body").removeClass("loading");
+            }
+        });
 
     </script>
 @endsection
