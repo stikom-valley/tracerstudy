@@ -26,34 +26,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
 
     @yield('style')
-
-    <style>
-        .overlay {
-            display: none;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 999;
-            background: rgb(255, 255, 255) url("/assets/img/gif/loading.gif") center no-repeat;
-        }
-
-        body {
-            text-align: center;
-        }
-
-        /* Turn off scrollbar when body element has the loading class */
-        body.loading {
-            overflow: hidden;
-        }
-
-        /* Make spinner image visible when body element has the loading class */
-        body.loading .overlay {
-            display: block;
-        }
-
-    </style>
 </head>
 
 <body>
